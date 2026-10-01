@@ -22,13 +22,18 @@
   <link rel="preload" as="image" href="images/plate-1.jpg">
 </head>
 <body class="locked">
+  <canvas class="dust" id="dust" aria-hidden="true"></canvas>
   <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="veil" id="veil" aria-hidden="true"></div>
   <div class="progress" aria-hidden="true"><span id="progress"></span></div>
 
   <div class="intro" id="intro">
+    <div class="ambient" aria-hidden="true"></div>
     <p class="eyebrow intro-kicker">For Abigail Horlali Fiawoo</p>
     <div class="rule" aria-hidden="true"></div>
     <p class="invite">This will take a minute.<br>Stay for it.</p>
+    <div class="load" aria-hidden="true"><span></span></div>
     <button class="enter" id="enter" type="button">Enter</button>
     <p class="from">Kofi Asante</p>
   </div>
@@ -47,59 +52,63 @@
   </nav>
 
   <main id="main">
+    <section class="overture" id="overture">
+      <p class="overture-line"><span class="wide-only">Some moments aren’t meant to be posted.</span><span class="narrow-only">Some moments aren’t meant<br>to be posted.</span><br>They’re meant to be remembered.</p>
+    </section>
+
     <section class="hero" id="title" data-spy-section="title">
-      <p class="eyebrow">A page for one person</p>
+      <div class="bloom" aria-hidden="true"></div>
+      <p class="eyebrow hero-kicker">For one person</p>
       <h1>
-        <span class="line">Abigail</span>
-        <span class="sub">Horlali Fiawoo</span>
+        <span class="nm">Abigail</span>
+        <span class="nm">Horlali</span>
+        <span class="nm">Fiawoo.</span>
       </h1>
-      <div class="hero-foot">
-        <p>From Kofi Asante</p>
-        <p class="scroll-hint">Scroll</p>
-      </div>
+      <p class="by">From Kofi Asante</p>
+      <p class="scroll-hint">Scroll</p>
     </section>
 
-    <section class="verse">
-      <p>I made a quiet place<br>and put your name in it.</p>
+    <section class="verse" id="v1">
+      <p>Nothing to prove here.</p>
     </section>
 
-    <figure class="plate" id="portrait" data-spy-section="portrait">
+    <figure class="plate a" id="portrait" data-spy-section="portrait">
       <div class="frame">
-        <img src="images/plate-1.jpg" width="471" height="838" alt="Abigail Horlali Fiawoo">
+        <img src="images/plate-1.jpg" width="471" height="838" alt="Abigail Horlali Fiawoo" decoding="async">
       </div>
-      <figcaption>Plate I</figcaption>
+      <figcaption>Scene I</figcaption>
     </figure>
 
-    <section class="verse">
-      <p>The night can keep the rest.<br><em>This part is yours.</em></p>
+    <section class="verse" id="v2">
+      <p>The night can keep the rest.</p>
     </section>
 
-    <figure class="plate wide" id="still" data-spy-section="still">
+    <figure class="plate wide b" id="still" data-spy-section="still">
       <div class="frame">
-        <img src="images/plate-2.jpg" width="471" height="284" alt="Abigail Horlali Fiawoo in the car">
+        <img src="images/plate-2.jpg" width="471" height="284" alt="Abigail Horlali Fiawoo in the car" decoding="async">
       </div>
-      <figcaption>Plate II</figcaption>
+      <figcaption>Scene II</figcaption>
     </figure>
 
-    <section class="verse">
-      <p>If someone else is looking, let them.<br>They only get to visit.</p>
+    <section class="verse" id="v3">
+      <p>Anyone else is only passing through.</p>
     </section>
 
-    <figure class="plate dim" id="light">
+    <figure class="plate dim c" id="light">
       <div class="frame">
-        <img src="images/plate-3.jpg" width="471" height="780" alt="The cross Abigail Horlali Fiawoo wears">
+        <img src="images/plate-3.jpg" width="471" height="780" alt="The cross Abigail Horlali Fiawoo wears" decoding="async">
       </div>
-      <figcaption>Plate III</figcaption>
+      <figcaption>Scene III</figcaption>
     </figure>
 
     <section class="letter-wrap" id="letter" data-spy-section="letter">
       <article class="letter">
         <p class="dateline">1 October 2026</p>
         <h2 class="greeting">Abigail,</h2>
-        <p class="lead">There are pages made for everyone. This one refused.</p>
-        <p>Your name is long enough to be read aloud. Abigail Horlali Fiawoo. I set it large because anything smaller would have been careless.</p>
-        <p>I do not have a speech hidden here. I have your face, a little time, and my name at the bottom so you know who stayed still long enough to make it.</p>
-        <p>Stay until the end. The last thing only appears if you hold on.</p>
+        <p class="lead">I did not write a story around you. I left the room quiet and put your name in it.</p>
+        <p class="spoken">Abigail Horlali Fiawoo.</p>
+        <p>Read it slowly. That is why the type is this large.</p>
+        <p>The photographs are as you were. Nothing added. When the page ends, hold on. The light stays only while you do.</p>
         <p class="sign">Kofi Asante</p>
       </article>
     </section>
@@ -109,7 +118,7 @@
       <button class="hold-surface" id="hold" type="button" aria-describedby="hold-help">
         <span class="rest">
           <span class="eyebrow">Last</span>
-          <span class="rest-line" id="hold-help">Press and hold.</span>
+          <span class="rest-line" id="hold-help">Hold on.</span>
         </span>
         <span class="secret">
           <span class="eyebrow secret-kicker">For</span>
@@ -120,8 +129,11 @@
     </section>
   </main>
 
-  <button class="play" id="play" type="button" aria-pressed="false"><span id="play-label">Play</span></button>
-  <noscript><style>.intro{display:none}body{overflow:auto}</style></noscript>
+  <div class="dock">
+    <button class="ghost" id="sound" type="button" aria-pressed="false">Sound</button>
+    <button class="play" id="play" type="button" aria-pressed="false"><span id="play-label">Play</span></button>
+  </div>
+  <noscript><style>.intro,.veil{display:none}body{overflow:auto}.overture-line,.nm,.by,.scroll-hint{opacity:1}</style></noscript>
   <script src="js/main.js"></script>
 </body>
 </html>
