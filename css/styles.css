@@ -109,16 +109,147 @@ body.is-named .progress { opacity: 1; }
   position: fixed;
   inset: 0;
   z-index: 60;
+  background: var(--night);
+  overflow: auto;
+  transition: opacity 1.05s ease, visibility 1.05s ease;
+}
+
+.intro-scroll {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  width: min(46rem, 100%);
+  min-height: 100%;
+  margin-inline: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 0.2rem;
   padding:
-    max(1.5rem, env(safe-area-inset-top))
+    max(1.35rem, env(safe-area-inset-top))
     var(--gutter)
-    max(2rem, env(safe-area-inset-bottom));
-  background: var(--night);
-  overflow: hidden;
-  transition: opacity 1.05s ease, visibility 1.05s ease;
+    max(1.4rem, env(safe-area-inset-bottom));
+}
+
+.intro-scroll::before,
+.intro-scroll::after {
+  content: "";
+  flex: 1 0 0;
+  min-height: 0;
+}
+
+.intro-days {
+  margin: 0.35rem 0 0;
+  font-family: var(--serif);
+  font-weight: 560;
+  font-size: clamp(4.4rem, 18vw, 7.4rem);
+  line-height: 0.82;
+  letter-spacing: -0.055em;
+}
+
+.intro-days span:last-child {
+  display: inline-block;
+  margin-left: 0.35rem;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.intro-rest {
+  margin: 0.35rem 0 0;
+  color: var(--gold);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.35rem, 4vw, 1.8rem);
+  letter-spacing: 0.04em;
+}
+
+.intro-rest span {
+  margin: 0 0.45rem 0 0.12rem;
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cream-soft);
+}
+
+.intro-today {
+  margin: 0.6rem 0 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(2.4rem, 7vw, 4rem);
+  letter-spacing: -0.03em;
+}
+
+.intro-label {
+  margin: 1.15rem 0 0.55rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  color: var(--cream-soft);
+}
+
+.intro-games {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.intro-games button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  width: 100%;
+  min-height: 3.6rem;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  color: var(--cream);
+  background: rgba(246, 241, 231, 0.04);
+  border: 1px solid rgba(228, 200, 154, 0.55);
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.35rem, 4.5vw, 1.7rem);
+  letter-spacing: -0.02em;
+}
+
+.intro-games button span {
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 0.64rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.intro-games button:hover,
+.intro-games button:focus-visible {
+  background: var(--gold-deep);
+  color: var(--ink);
+  border-color: var(--gold-deep);
+}
+
+.intro-games button:hover span,
+.intro-games button:focus-visible span { color: var(--ink); }
+
+.intro .enter,
+.intro .from {
+  opacity: 1;
+  animation: none;
+}
+
+.intro .enter { margin-top: 1rem; }
+
+@media (min-width: 800px) {
+  .intro-games { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-height: 740px) {
+  .intro-days { font-size: clamp(3.4rem, 14vw, 4.6rem); }
+  .intro-games button { min-height: 3.15rem; font-size: 1.2rem; }
 }
 
 .ambient {
@@ -1263,7 +1394,6 @@ a:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 
-  .intro,
   .veil,
   .dust,
   .ambient { display: none; }

@@ -59,12 +59,13 @@
     document.title = "Abigail Horlali Fiawoo";
   }
 
-  function goToHall() {
+  function goToPlace(id) {
     cancelOpening();
     revealPage();
-    const hall = document.getElementById("hall");
+    const el = document.getElementById(id || "hall");
+    if (!el) return;
     root.style.scrollBehavior = "auto";
-    window.scrollTo(0, window.scrollY + hall.getBoundingClientRect().top);
+    window.scrollTo(0, Math.max(0, window.scrollY + el.getBoundingClientRect().top - 72));
     root.style.scrollBehavior = "";
   }
   let playing = false;
@@ -112,17 +113,21 @@
     later(function () { body.classList.remove("locked"); }, 8200);
   }
 
-  if (reduced) openPage();
-  else enter.addEventListener("click", openPage);
+  enter.addEventListener("click", openPage);
 
-  document.getElementById("to-activities").addEventListener("click", goToHall);
+  document.querySelectorAll("[data-jump]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      goToPlace(button.getAttribute("data-jump"));
+    });
+  });
   document.getElementById("hall-jump").addEventListener("click", function (event) {
     event.preventDefault();
-    goToHall();
+    goToPlace("hall");
   });
 
   window.addEventListener("keydown", function (event) {
-    if (event.key === "Enter" && !opened && event.target !== hold && event.target.id !== "to-activities") openPage();
+    const jumped = event.target.closest && event.target.closest("[data-jump]");
+    if (event.key === "Enter" && !opened && event.target !== hold && !jumped) openPage();
   });
 
   function scrollProgress() {
@@ -477,6 +482,10 @@
     const onDay = now >= target && now < birthdayEnd;
     todayEl.hidden = !onDay;
     gridEl.hidden = onDay;
+    const introToday = document.getElementById("intro-today");
+    const introGrid = document.getElementById("intro-grid");
+    if (introToday) introToday.hidden = !onDay;
+    if (introGrid) introGrid.hidden = onDay;
 
     marks.querySelectorAll("li").forEach(function (li) {
       const day = Number(li.dataset.day);
@@ -506,6 +515,15 @@
     void secsEl.offsetWidth;
     secsEl.textContent = pad(secs);
     secsEl.classList.add("is-tick");
+    const introDays = document.getElementById("intro-days");
+    const introDaysLabel = document.getElementById("intro-days-label");
+    if (introDays) {
+      introDays.textContent = String(days);
+      introDaysLabel.textContent = days === 1 ? "day" : "days";
+      document.getElementById("intro-hours").textContent = pad(hours);
+      document.getElementById("intro-mins").textContent = pad(mins);
+      document.getElementById("intro-secs").textContent = pad(secs);
+    }
     const spoken = days + " days until 16 October.";
     if (spoken !== lastLive) {
       lastLive = spoken;
