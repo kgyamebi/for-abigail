@@ -225,6 +225,25 @@ body.is-open .intro {
   animation-delay: 3.35s;
 }
 
+.side-door {
+  position: relative;
+  display: block;
+  margin-top: 0.85rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--cream-soft);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  cursor: pointer;
+  opacity: 0;
+  animation: rise 1s var(--ease) 3.45s forwards;
+}
+
+.side-door:hover,
+.side-door:focus-visible { color: var(--gold); }
+
 .topbar,
 .rail,
 .play {
@@ -248,10 +267,24 @@ body.is-named .play {
   right: var(--gutter);
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
   font-size: 0.68rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   mix-blend-mode: difference;
+}
+
+.hall-jump {
+  color: inherit;
+  text-decoration: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.is-named .hall-jump {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .rail { display: none; }
@@ -824,6 +857,94 @@ figcaption {
   color: var(--gold);
 }
 
+.game-score .best {
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream-soft);
+}
+
+.hall {
+  padding: 18vh var(--gutter) 16vh;
+  max-width: 52rem;
+  scroll-margin-top: 1rem;
+}
+
+.hall-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.3rem;
+  margin-top: 1.8rem;
+}
+
+.hall-nav a {
+  color: var(--gold);
+  text-decoration: none;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+  max-width: 28rem;
+  margin-top: 1.2rem;
+}
+
+.card {
+  aspect-ratio: 3 / 4;
+  border: 1px solid rgba(246, 241, 231, 0.22);
+  background: #141210;
+  color: var(--ink);
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: var(--serif);
+  font-size: clamp(0.78rem, 2.2vw, 1.05rem);
+  line-height: 1.15;
+  padding: 0.35rem;
+}
+
+.card span { opacity: 0; }
+
+.card.is-open,
+.card.is-matched { background: var(--paper); }
+
+.card.is-open span,
+.card.is-matched span { opacity: 1; }
+
+.card.is-matched { border-color: var(--gold-deep); }
+
+.pass-panel { max-width: 36rem; margin-top: 1.2rem; }
+
+.round {
+  margin: 0;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  color: var(--gold);
+}
+
+.prompt {
+  margin: 0.8rem 0 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.5rem, 4vw, 2.3rem);
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  min-height: 4.8em;
+}
+
+.pass-actions {
+  display: flex;
+  gap: 0.65rem;
+  align-items: center;
+  margin-top: 0.4rem;
+}
+
 .text-btn,
 .game-again {
   margin-top: 1.3rem;
@@ -859,6 +980,7 @@ figcaption {
 }
 
 .sky.is-won {
+  height: 7.5rem;
   box-shadow: inset 0 0 90px rgba(228, 200, 154, 0.28);
 }
 
@@ -1162,6 +1284,8 @@ a:focus-visible {
   .invite,
   .enter,
   .from,
+  .side-door,
+  .hall-jump,
   .bloom {
     opacity: 1 !important;
     filter: none !important;

@@ -35,11 +35,13 @@
     <p class="invite">This will take a minute.<br>Stay for it.</p>
     <div class="load" aria-hidden="true"><span></span></div>
     <button class="enter" id="enter" type="button">Enter</button>
+    <button class="side-door" id="to-activities" type="button">Activities</button>
     <p class="from">Kofi Asante</p>
   </div>
 
   <header class="topbar">
     <span>Edition 01</span>
+    <a class="hall-jump" href="#hall" id="hall-jump">Activities</a>
     <span>1 October 2026</span>
   </header>
 
@@ -49,7 +51,8 @@
     <a href="#still" data-spy="still">03</a>
     <a href="#letter" data-spy="letter">04</a>
     <a href="#sixteenth" data-spy="sixteenth">05</a>
-    <a href="#stay" data-spy="stay">06</a>
+    <a href="#hall" data-spy="hall">06</a>
+    <a href="#stay" data-spy="stay">07</a>
   </nav>
 
   <main id="main">
@@ -136,16 +139,53 @@
         <li>Abigail</li>
         <li>Her mother</li>
       </ul>
+    </section>
+
+    <section class="hall" id="hall" data-spy-section="hall">
+      <p class="eyebrow">For Abigail and her friends</p>
+      <h2 class="day-title">Come here just to play.</h2>
+      <p class="day-note">One phone is enough. Pass it when a turn is over. Nothing here asks you to sign in.</p>
+      <nav class="hall-nav" aria-label="Activities">
+        <a href="#lights">Lights</a>
+        <a href="#pairs">Pairs</a>
+        <a href="#passes">Pass the phone</a>
+      </nav>
 
       <div class="playfield" id="lights">
-        <p class="eyebrow">If you stay</p>
+        <p class="eyebrow">Game</p>
         <h3>Keep the lights</h3>
-        <p class="game-help">Sixteen lights cross the dark. Touch one to keep it. They are for the 16th, and anyone here can play.</p>
+        <p class="game-help">Sixteen lights cross the dark. Touch one to keep it. Play alone, or race the person beside you.</p>
         <p class="game-score"><span id="kept">0</span> kept of 16</p>
         <button class="text-btn" id="game-begin" type="button">Begin</button>
         <div class="sky" id="sky" hidden></div>
         <p class="game-done" id="game-done" hidden>All sixteen. That’s their day.</p>
         <button class="ghost game-again" id="game-again" type="button" hidden>Again</button>
+      </div>
+
+      <div class="playfield" id="pairs">
+        <p class="eyebrow">Game</p>
+        <h3>Pairs</h3>
+        <p class="game-help">Turn two cards. Take turns. The table with the fewest turns wins.</p>
+        <p class="game-score"><span id="pair-turns">0</span><span id="pair-turns-word"> turns</span> <span class="best" id="pair-best"></span></p>
+        <button class="text-btn" id="pairs-begin" type="button">Deal</button>
+        <div class="board" id="board" hidden></div>
+        <p class="game-done" id="pairs-done" hidden>Every pair found.</p>
+        <button class="ghost game-again" id="pairs-again" type="button" hidden>Deal again</button>
+      </div>
+
+      <div class="playfield" id="passes">
+        <p class="eyebrow">Activity</p>
+        <h3>Pass the phone</h3>
+        <p class="game-help">Read the card out loud. Do it. Hand the phone to someone else.</p>
+        <button class="text-btn" id="pass-begin" type="button">Start a round</button>
+        <div class="pass-panel" id="pass-panel" hidden>
+          <p class="round" id="pass-round">1 of 10</p>
+          <p class="prompt" id="pass-prompt"></p>
+          <div class="pass-actions">
+            <button class="ghost" id="pass-prev" type="button">Back</button>
+            <button class="text-btn" id="pass-next" type="button">Next</button>
+          </div>
+        </div>
       </div>
     </section>
 
