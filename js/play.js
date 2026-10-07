@@ -10,6 +10,22 @@
   const doneEl = document.getElementById("game-done");
   const againBtn = document.getElementById("game-again");
   const beginBtn = document.getElementById("game-begin");
+  const lightsTurn = document.getElementById("lights-turn");
+  const raceScore = document.getElementById("race-score");
+  const raceYou = document.getElementById("race-you");
+  const raceThem = document.getElementById("race-them");
+  let lightsMode = "alone";
+
+  function setLightsMode(next) {
+    lightsMode = next;
+    document.getElementById("lights-alone").classList.toggle("is-on", next === "alone");
+    document.getElementById("lights-race").classList.toggle("is-on", next === "race");
+    document.getElementById("lights-alone").setAttribute("aria-pressed", next === "alone" ? "true" : "false");
+    document.getElementById("lights-race").setAttribute("aria-pressed", next === "race" ? "true" : "false");
+  }
+
+  document.getElementById("lights-alone").addEventListener("click", function () { setLightsMode("alone"); });
+  document.getElementById("lights-race").addEventListener("click", function () { setLightsMode("race"); });
 
   function startLights() {
     sky.hidden = false;
@@ -20,6 +36,17 @@
     againBtn.hidden = true;
     keptEl.textContent = "0";
     let caught = 0;
+    let you = 0;
+    let them = 0;
+    let yours = true;
+    const racing = lightsMode === "race";
+    raceScore.hidden = !racing;
+    lightsTurn.hidden = !racing;
+    if (racing) {
+      raceYou.textContent = "0";
+      raceThem.textContent = "0";
+      lightsTurn.textContent = "Your light.";
+    }
     for (let i = 0; i < 16; i++) {
       const mote = document.createElement("button");
       mote.type = "button";
@@ -33,10 +60,25 @@
         mote.classList.add("is-caught");
         caught += 1;
         keptEl.textContent = String(caught);
+        if (racing) {
+          if (yours) you += 1;
+          else them += 1;
+          yours = !yours;
+          raceYou.textContent = String(you);
+          raceThem.textContent = String(them);
+          lightsTurn.textContent = yours ? "Your light." : "Their light.";
+        }
         blip();
         if (caught === 16) {
           sky.classList.add("is-won");
-          doneEl.hidden = false;
+          lightsTurn.hidden = true;
+          if (racing) {
+            doneEl.hidden = false;
+            doneEl.textContent = you === them ? "Even." : (you > them ? "You kept more." : "They kept more.");
+          } else {
+            doneEl.hidden = false;
+            doneEl.textContent = "All sixteen. That’s their day.";
+          }
           againBtn.hidden = false;
         }
       });
@@ -60,6 +102,28 @@
   let openCards = [];
   let pairMatches = 0;
   let pairTurns = 0;
+  let pairMode = "solo";
+
+  function setPairMode(next) {
+    pairMode = next;
+    document.getElementById("pairs-solo").classList.toggle("is-on", next === "solo");
+    document.getElementById("pairs-turns").classList.toggle("is-on", next === "turns");
+    document.getElementById("pairs-solo").setAttribute("aria-pressed", next === "solo" ? "true" : "false");
+    document.getElementById("pairs-turns").setAttribute("aria-pressed", next === "turns" ? "true" : "false");
+  }
+
+  document.getElementById("pairs-solo").addEventListener("click", function () { setPairMode("solo"); });
+  document.getElementById("pairs-turns").addEventListener("click", function () { setPairMode("turns"); });
+
+  function handPairs() {
+    if (pairMode !== "turns" || pairMatches === faces.length || !window.Curtain) return;
+    boardLocked = true;
+    window.Curtain.show({
+      title: "Their turn.",
+      note: "Hand the phone over. Two cards.",
+      done: function () { boardLocked = false; }
+    });
+  }
 
   function shuffle(list) {
     const copy = list.slice();
@@ -107,6 +171,7 @@
       second.classList.add("is-matched");
       pairMatches += 1;
       if (pairMatches === faces.length) finishPairs();
+      else handPairs();
       return;
     }
     boardLocked = true;
@@ -116,6 +181,7 @@
       first.setAttribute("aria-label", "Hidden card");
       second.setAttribute("aria-label", "Hidden card");
       boardLocked = false;
+      handPairs();
     }, reduced ? 0 : 720);
   }
 

@@ -85,6 +85,21 @@
                 <span class="dest-note">Read it. Do it. Hand it on.</span>
               </button>
             </div>
+            <div class="adult-block">
+              <p class="eyebrow">Adults</p>
+              <div class="dests">
+                <button class="dest" type="button" data-go="dare">
+                  <span class="dest-kicker">18+</span>
+                  <span class="dest-title">Truth or dare</span>
+                  <span class="dest-note">One phone between you. Skip anything. Stop when someone wants to.</span>
+                </button>
+                <button class="dest" type="button" data-go="ask">
+                  <span class="dest-kicker">18+</span>
+                  <span class="dest-title">Ask</span>
+                  <span class="dest-note">One question. Say it out loud. Then hand the phone on.</span>
+                </button>
+              </div>
+            </div>
           </div>
 
           <button class="letter-door" type="button" data-go="story">
@@ -122,8 +137,14 @@
       <div class="game-frame">
         <p class="eyebrow">Game</p>
         <h1>Keep the lights</h1>
-        <p class="lede">Sixteen lights cross the dark. Touch one to keep it. Play alone, or race the person beside you.</p>
+        <p class="lede">Sixteen lights cross the dark. Touch one to keep it. Alone, or a race on one phone.</p>
+        <div class="choices" role="group" aria-label="How to play">
+          <button class="choice is-on" id="lights-alone" type="button" aria-pressed="true">Alone</button>
+          <button class="choice" id="lights-race" type="button" aria-pressed="false">Race</button>
+        </div>
         <p class="score"><span id="kept">0</span> kept of 16</p>
+        <p class="score" id="race-score" hidden><span id="race-you">0</span> you · <span id="race-them">0</span> them</p>
+        <p class="turn" id="lights-turn" hidden>Your light.</p>
         <button class="solid" id="game-begin" type="button">Begin</button>
         <div class="sky" id="sky" hidden></div>
         <p class="done" id="game-done" hidden>All sixteen. That’s their day.</p>
@@ -135,12 +156,78 @@
       <div class="game-frame">
         <p class="eyebrow">Game</p>
         <h1>Pairs</h1>
-        <p class="lede">Turn two cards. Take turns. The table with the fewest turns wins.</p>
+        <p class="lede">Turn two cards. Alone, or pass the phone after each turn. The fewest turns win.</p>
+        <div class="choices" role="group" aria-label="How to play">
+          <button class="choice is-on" id="pairs-solo" type="button" aria-pressed="true">Alone</button>
+          <button class="choice" id="pairs-turns" type="button" aria-pressed="false">Take turns</button>
+        </div>
         <p class="score"><span id="pair-turns">0</span><span id="pair-turns-word"> turns</span> <span class="best" id="pair-best"></span></p>
         <button class="solid" id="pairs-begin" type="button">Deal</button>
         <div class="board" id="board" hidden></div>
         <p class="done" id="pairs-done" hidden>Every pair found.</p>
         <button class="quiet" id="pairs-again" type="button" hidden>Deal again</button>
+      </div>
+    </section>
+
+    <section class="screen game" data-screen="dare" hidden>
+      <div class="game-frame pass-frame" id="dare-root">
+        <p class="eyebrow">18+</p>
+        <h1>Truth or dare</h1>
+        <div class="gate" id="dare-gate">
+          <p class="lede">Adults only. Either of you can skip. No explaining. Stop when someone wants to.</p>
+          <button class="solid" id="dare-yes" type="button">I’m an adult</button>
+          <button class="quiet" id="dare-no" type="button">Not now</button>
+        </div>
+        <div id="dare-play" hidden>
+          <p class="lede">One phone, passed after every card. Or open the same code on theirs.</p>
+          <div class="code-row">
+            <p class="round" id="dare-code">----</p>
+            <button class="quiet" id="dare-copy" type="button">Copy link</button>
+            <input id="dare-join" type="text" maxlength="4" autocapitalize="characters" autocomplete="off" enterkeyhint="go" aria-label="Their code" placeholder="Code">
+          </div>
+          <div id="dare-choose">
+            <p class="ready-line">Your turn.</p>
+            <div class="pass-actions">
+              <button class="solid" id="dare-truth" type="button">Truth</button>
+              <button class="solid" id="dare-dare" type="button">Dare</button>
+              <button class="quiet" id="dare-skip" type="button">Skip</button>
+            </div>
+          </div>
+          <div id="dare-card" hidden>
+            <p class="round" id="dare-kind">Truth</p>
+            <p class="prompt" id="dare-prompt"></p>
+            <div class="pass-actions">
+              <button class="solid" id="dare-done" type="button">Pass the phone</button>
+              <button class="quiet" id="dare-another" type="button">A different one</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen game" data-screen="ask" hidden>
+      <div class="game-frame pass-frame" id="ask-root">
+        <p class="eyebrow">18+</p>
+        <h1>Ask</h1>
+        <div class="gate" id="ask-gate">
+          <p class="lede">Adults only. Read the question to them. Skip if you want. Stop when someone wants to.</p>
+          <button class="solid" id="ask-yes" type="button">I’m an adult</button>
+          <button class="quiet" id="ask-no" type="button">Not now</button>
+        </div>
+        <div id="ask-play" hidden>
+          <p class="lede">The same code deals the same questions on another phone.</p>
+          <div class="code-row">
+            <p class="round" id="ask-code">----</p>
+            <button class="quiet" id="ask-copy" type="button">Copy link</button>
+            <input id="ask-join" type="text" maxlength="4" autocapitalize="characters" autocomplete="off" enterkeyhint="go" aria-label="Their code" placeholder="Code">
+          </div>
+          <p class="round" id="ask-round">1</p>
+          <p class="prompt" id="ask-prompt"></p>
+          <div class="pass-actions">
+            <button class="solid" id="ask-next" type="button">Pass the phone</button>
+            <button class="quiet" id="ask-skip" type="button">Skip</button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -237,6 +324,13 @@
     </section>
   </main>
 
+  <div class="curtain" id="curtain" hidden>
+    <p class="ready-line" id="curtain-title">Their turn.</p>
+    <p class="lede" id="curtain-note">Hand the phone over.</p>
+    <button class="solid" id="curtain-go" type="button">Ready</button>
+    <button class="quiet" id="curtain-send" type="button" hidden>Copy the link</button>
+  </div>
+
   <noscript>
     <style>
       [data-screen] { display: block !important; }
@@ -244,11 +338,13 @@
       .count, .today-line { display: none; }
     </style>
   </noscript>
+  <script src="js/curtain.js"></script>
   <script src="js/audio.js"></script>
   <script src="js/clock.js"></script>
   <script src="js/play.js"></script>
   <script src="js/oware.js"></script>
   <script src="js/story.js"></script>
+  <script src="js/adult.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

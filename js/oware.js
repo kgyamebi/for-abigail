@@ -162,6 +162,7 @@
     let busy = false;
     let gen = 0;
     let note = "";
+    let handoff = false;
     let record = loadRecord();
 
     function loadRecord() {
@@ -276,6 +277,16 @@
       else if (mode === "friend") say(lead + "Friend’s turn. Their houses are the far row.");
       else say(lead + "The house is choosing.");
       render();
+      if (mode === "friend" && handoff && window.Curtain) {
+        const mine = side === 0;
+        const packed = encodeState();
+        window.Curtain.show({
+          title: mine ? "Your turn." : "Their turn.",
+          note: mine ? "The near row is yours." : "Hand the phone over. The far row is theirs.",
+          link: location.origin + location.pathname + "#oware-" + packed,
+          done: function () { handoff = false; }
+        });
+      }
       if (mode === "house" && side === 1) {
         const token = gen;
         window.setTimeout(function () {
@@ -316,6 +327,7 @@
             if (token !== gen) return;
             busy = false;
             side = other(side);
+            if (mode === "friend") handoff = true;
             beginTurn();
           }, result.captured || result.slam ? 520 : 160);
         }, result.taken.length ? 260 : 40);
@@ -337,8 +349,42 @@
       friendBtn.setAttribute("aria-pressed", mode === "friend" ? "true" : "false");
       houseBtn.setAttribute("aria-pressed", mode === "house" ? "true" : "false");
       doneEl.hidden = true;
+      handoff = false;
+      if (window.Curtain) window.Curtain.hide();
       paintRecord();
       beginTurn();
+    }
+
+    function encodeState() {
+      const json = JSON.stringify({ b: board, s: scores, t: side });
+      return btoa(json).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+    }
+
+    function restore(token) {
+      try {
+        const pad = token.replace(/-/g, "+").replace(/_/g, "/");
+        const data = JSON.parse(atob(pad));
+        if (!data.b || data.b.length !== 12) return false;
+        gen += 1;
+        mode = "friend";
+        board = data.b.slice();
+        scores = data.s.slice();
+        side = data.t === 1 ? 1 : 0;
+        seen = {};
+        over = false;
+        busy = false;
+        handoff = true;
+        friendBtn.classList.add("is-on");
+        houseBtn.classList.remove("is-on");
+        friendBtn.setAttribute("aria-pressed", "true");
+        houseBtn.setAttribute("aria-pressed", "false");
+        doneEl.hidden = true;
+        paintRecord();
+        beginTurn();
+        return true;
+      } catch (err) {
+        return false;
+      }
     }
 
     boardEl.addEventListener("click", function (event) {
@@ -353,6 +399,8 @@
     friendBtn.addEventListener("click", function () { deal("friend"); });
     houseBtn.addEventListener("click", function () { deal("house"); });
     againBtn.addEventListener("click", function () { deal(mode); });
+    const incoming = (location.hash || "").slice(1);
+    if (incoming.indexOf("oware-") === 0 && restore(incoming.slice(6))) return;
     deal("friend");
   }
 
