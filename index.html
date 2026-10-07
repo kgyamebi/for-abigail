@@ -48,7 +48,8 @@
     <a href="#portrait" data-spy="portrait">02</a>
     <a href="#still" data-spy="still">03</a>
     <a href="#letter" data-spy="letter">04</a>
-    <a href="#stay" data-spy="stay">05</a>
+    <a href="#sixteenth" data-spy="sixteenth">05</a>
+    <a href="#stay" data-spy="stay">06</a>
   </nav>
 
   <main id="main">
@@ -111,6 +112,41 @@
         <p>The photographs are as you were. Nothing added. When the page ends, hold on. The light stays only while you do.</p>
         <p class="sign">Kofi Asante</p>
       </article>
+    </section>
+
+    <section class="day" id="sixteenth" data-spy-section="sixteenth">
+      <p class="eyebrow">16 October</p>
+      <h2 class="day-title">One day,<br>two birthdays.</h2>
+      <p class="day-note">Abigail and her mother share the date. Every year, the same one.</p>
+      <div class="clock" id="clock">
+        <p class="day-today" id="day-today" hidden>Today. Both of them.</p>
+        <div class="clock-grid" id="clock-grid">
+          <p class="clock-main"><span class="clock-num" id="cd-days">0</span><span class="clock-unit" id="cd-days-label">days</span></p>
+          <p class="clock-rest">
+            <span><b id="cd-hours">00</b> hours</span>
+            <span><b id="cd-mins">00</b> minutes</span>
+            <span><b id="cd-secs">00</b> seconds</span>
+          </p>
+        </div>
+      </div>
+      <p class="sr" id="cd-live" aria-live="polite"></p>
+      <ol class="marks" id="marks" aria-hidden="true"></ol>
+      <p class="marks-caption">The first sixteen days of October. The last belongs to them.</p>
+      <ul class="pair">
+        <li>Abigail</li>
+        <li>Her mother</li>
+      </ul>
+
+      <div class="playfield" id="lights">
+        <p class="eyebrow">If you stay</p>
+        <h3>Keep the lights</h3>
+        <p class="game-help">Sixteen lights cross the dark. Touch one to keep it. They are for the 16th, and anyone here can play.</p>
+        <p class="game-score"><span id="kept">0</span> kept of 16</p>
+        <button class="text-btn" id="game-begin" type="button">Begin</button>
+        <div class="sky" id="sky" hidden></div>
+        <p class="game-done" id="game-done" hidden>All sixteen. That’s their day.</p>
+        <button class="ghost game-again" id="game-again" type="button" hidden>Again</button>
+      </div>
     </section>
 
     <section class="finale" id="stay" data-spy-section="stay">

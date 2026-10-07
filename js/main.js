@@ -31,6 +31,8 @@
     { sel: "#v3", dwell: 2600 },
     { sel: "#light", dwell: 4400 },
     { sel: "#letter", dwell: 15000, read: true },
+    { sel: "#sixteenth", dwell: 7000 },
+    { sel: "#lights", dwell: 3200 },
     { sel: "#stay", dwell: 2200 }
   ];
 
@@ -402,4 +404,121 @@
     }
     moveCursor();
   }
+
+  const marks = document.getElementById("marks");
+  const daysEl = document.getElementById("cd-days");
+  const daysLabel = document.getElementById("cd-days-label");
+  const hoursEl = document.getElementById("cd-hours");
+  const minsEl = document.getElementById("cd-mins");
+  const secsEl = document.getElementById("cd-secs");
+  const todayEl = document.getElementById("day-today");
+  const gridEl = document.getElementById("clock-grid");
+  const liveEl = document.getElementById("cd-live");
+  let lastLive = "";
+
+  for (let d = 1; d <= 16; d++) {
+    const li = document.createElement("li");
+    li.dataset.day = String(d);
+    marks.appendChild(li);
+  }
+
+  function pad(n) {
+    return String(n).padStart(2, "0");
+  }
+
+  function upcomingSixteenth(now) {
+    const year = now.getFullYear();
+    const start = new Date(year, 9, 16, 0, 0, 0, 0);
+    const end = new Date(year, 9, 17, 0, 0, 0, 0);
+    if (now >= end) return new Date(year + 1, 9, 16, 0, 0, 0, 0);
+    return start;
+  }
+
+  function tickClock() {
+    const now = new Date();
+    const target = upcomingSixteenth(now);
+    const birthdayEnd = new Date(target.getFullYear(), 9, 17, 0, 0, 0, 0);
+    const onDay = now >= target && now < birthdayEnd;
+    todayEl.hidden = !onDay;
+    gridEl.hidden = onDay;
+
+    marks.querySelectorAll("li").forEach(function (li) {
+      const day = Number(li.dataset.day);
+      const approaching = now.getMonth() === 9 && now.getDate() < 16 && now.getFullYear() === target.getFullYear();
+      li.classList.toggle("is-lit", onDay || (approaching && now.getDate() >= day));
+    });
+
+    if (onDay) {
+      if (lastLive !== "today") {
+        lastLive = "today";
+        liveEl.textContent = "Today is 16 October. Abigail and her mother.";
+      }
+      return;
+    }
+
+    let diff = target.getTime() - now.getTime();
+    if (diff < 0) diff = 0;
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+    daysEl.textContent = String(days);
+    daysLabel.textContent = days === 1 ? "day" : "days";
+    hoursEl.textContent = pad(hours);
+    minsEl.textContent = pad(mins);
+    secsEl.classList.remove("is-tick");
+    void secsEl.offsetWidth;
+    secsEl.textContent = pad(secs);
+    secsEl.classList.add("is-tick");
+    const spoken = days + " days until 16 October.";
+    if (spoken !== lastLive) {
+      lastLive = spoken;
+      liveEl.textContent = spoken + " Abigail and her mother.";
+    }
+  }
+
+  tickClock();
+  window.setInterval(tickClock, 1000);
+
+  const sky = document.getElementById("sky");
+  const keptEl = document.getElementById("kept");
+  const doneEl = document.getElementById("game-done");
+  const againBtn = document.getElementById("game-again");
+  const beginBtn = document.getElementById("game-begin");
+
+  function startLights() {
+    sky.hidden = false;
+    sky.innerHTML = "";
+    sky.classList.remove("is-won");
+    beginBtn.hidden = true;
+    doneEl.hidden = true;
+    againBtn.hidden = true;
+    keptEl.textContent = "0";
+    let caught = 0;
+
+    for (let i = 0; i < 16; i++) {
+      const mote = document.createElement("button");
+      mote.type = "button";
+      mote.className = "mote";
+      mote.setAttribute("aria-label", "Light " + (i + 1) + " of 16");
+      mote.style.left = (6 + Math.random() * 82) + "%";
+      mote.style.animationDuration = (8 + Math.random() * 7).toFixed(2) + "s";
+      mote.style.animationDelay = (-Math.random() * 9).toFixed(2) + "s";
+      mote.addEventListener("click", function () {
+        if (mote.classList.contains("is-caught")) return;
+        mote.classList.add("is-caught");
+        caught += 1;
+        keptEl.textContent = String(caught);
+        if (caught === 16) {
+          sky.classList.add("is-won");
+          doneEl.hidden = false;
+          againBtn.hidden = false;
+        }
+      });
+      sky.appendChild(mote);
+    }
+  }
+
+  beginBtn.addEventListener("click", startLights);
+  againBtn.addEventListener("click", startLights);
 })();
