@@ -67,17 +67,22 @@
               <button class="dest dest-oware" type="button" data-go="oware">
                 <span class="dest-kicker">Akan game</span>
                 <span class="dest-title">Oware</span>
-                <span class="dest-note">Twelve houses, four seeds. With a friend, or the house.</span>
+                <span class="dest-note">Twelve houses, four seeds. Same phone, one turn each, or the house.</span>
               </button>
               <button class="dest dest-lights" type="button" data-go="lights">
                 <span class="dest-kicker">Game</span>
                 <span class="dest-title">Keep the lights</span>
-                <span class="dest-note">Sixteen lights cross the dark. Touch one to keep it.</span>
+                <span class="dest-note">Sixteen lights. Alone, or a race on the same phone.</span>
               </button>
               <button class="dest dest-pairs" type="button" data-go="pairs">
                 <span class="dest-kicker">Game</span>
                 <span class="dest-title">Pairs</span>
-                <span class="dest-note">Eight pairs. The fewest turns win.</span>
+                <span class="dest-note">Eight pairs. Alone, or take turns on the same phone.</span>
+              </button>
+              <button class="dest" type="button" data-go="xo">
+                <span class="dest-kicker">Game</span>
+                <span class="dest-title">Tic tac toe</span>
+                <span class="dest-note">Three in a row. Same phone, you then them, or the house.</span>
               </button>
               <button class="dest dest-pass" type="button" data-go="pass">
                 <span class="dest-kicker">Together</span>
@@ -118,13 +123,13 @@
         <h1>Oware</h1>
         <p class="lede">Four seeds in every house. Pick up a house on your side and sow one seed to the right, around the board. If your last seed leaves two or three on their side, those seeds are yours, and so are the twos and threes just before them. First to twenty-five.</p>
         <div class="choices" role="group" aria-label="Who is across the board">
-          <button class="choice is-on" id="oware-friend" type="button" aria-pressed="true">A friend</button>
+          <button class="choice is-on" id="oware-friend" type="button" aria-pressed="true">Same phone</button>
           <button class="choice" id="oware-house" type="button" aria-pressed="false">The house</button>
         </div>
         <p class="record" id="oware-record" hidden></p>
         <p class="turn" id="oware-turn" aria-live="polite">Your turn. Sow from a house on your side.</p>
         <div class="oware-table">
-          <p class="who" id="oware-north"><b id="oware-n-count">0</b> <span id="oware-n-name">Friend</span></p>
+          <p class="who" id="oware-north"><b id="oware-n-count">0</b> <span id="oware-n-name">Them</span></p>
           <div class="oware-board" id="oware-board" role="group" aria-label="Oware board"></div>
           <p class="who" id="oware-south"><b id="oware-s-count">0</b> <span>You</span></p>
         </div>
@@ -137,10 +142,10 @@
       <div class="game-frame">
         <p class="eyebrow">Game</p>
         <h1>Keep the lights</h1>
-        <p class="lede">Sixteen lights cross the dark. Touch one to keep it. Alone, or a race on one phone.</p>
+        <p class="lede">Sixteen lights cross the dark. Touch one to keep it. Alone, or a race on the same phone.</p>
         <div class="choices" role="group" aria-label="How to play">
           <button class="choice is-on" id="lights-alone" type="button" aria-pressed="true">Alone</button>
-          <button class="choice" id="lights-race" type="button" aria-pressed="false">Race</button>
+          <button class="choice" id="lights-race" type="button" aria-pressed="false">Same phone</button>
         </div>
         <p class="score"><span id="kept">0</span> kept of 16</p>
         <p class="score" id="race-score" hidden><span id="race-you">0</span> you · <span id="race-them">0</span> them</p>
@@ -156,16 +161,35 @@
       <div class="game-frame">
         <p class="eyebrow">Game</p>
         <h1>Pairs</h1>
-        <p class="lede">Turn two cards. Alone, or pass the phone after each turn. The fewest turns win.</p>
+        <p class="lede">Turn two cards. Alone, or pass this phone after each turn. The fewest turns win.</p>
         <div class="choices" role="group" aria-label="How to play">
           <button class="choice is-on" id="pairs-solo" type="button" aria-pressed="true">Alone</button>
-          <button class="choice" id="pairs-turns" type="button" aria-pressed="false">Take turns</button>
+          <button class="choice" id="pairs-turns" type="button" aria-pressed="false">Same phone</button>
         </div>
         <p class="score"><span id="pair-turns">0</span><span id="pair-turns-word"> turns</span> <span class="best" id="pair-best"></span></p>
         <button class="solid" id="pairs-begin" type="button">Deal</button>
         <div class="board" id="board" hidden></div>
         <p class="done" id="pairs-done" hidden>Every pair found.</p>
         <button class="quiet" id="pairs-again" type="button" hidden>Deal again</button>
+      </div>
+    </section>
+
+    <section class="screen game" data-screen="xo" hidden>
+      <div class="game-frame">
+        <p class="eyebrow">Game</p>
+        <h1>Tic tac toe</h1>
+        <p class="lede">Three in a row. Keep this phone between you and take turns. The link is only if you are apart.</p>
+        <div class="choices" role="group" aria-label="How to play">
+          <button class="choice is-on" id="xo-together" type="button" aria-pressed="true">Same phone</button>
+          <button class="choice" id="xo-house" type="button" aria-pressed="false">The house</button>
+        </div>
+        <p class="turn" id="xo-turn" aria-live="polite">Your mark.</p>
+        <div class="xo-board" id="xo-board" role="group" aria-label="Tic tac toe board"></div>
+        <p class="done" id="xo-done" hidden></p>
+        <div class="code-row">
+          <button class="quiet" id="xo-again" type="button">New game</button>
+          <button class="quiet" id="xo-copy" type="button">Copy the link</button>
+        </div>
       </div>
     </section>
 
@@ -345,6 +369,7 @@
   <script src="js/oware.js"></script>
   <script src="js/story.js"></script>
   <script src="js/adult.js"></script>
+  <script src="js/xo.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

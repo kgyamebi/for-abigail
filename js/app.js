@@ -1,10 +1,11 @@
 (function () {
-  const screens = ["home", "oware", "lights", "pairs", "pass", "dare", "ask", "story"];
+  const screens = ["home", "oware", "lights", "pairs", "xo", "pass", "dare", "ask", "story"];
   const titles = {
     home: "For Abigail",
     oware: "Oware",
     lights: "Keep the lights",
     pairs: "Pairs",
+    xo: "Tic tac toe",
     pass: "Pass the phone",
     dare: "Truth or dare",
     ask: "Ask",
@@ -61,6 +62,7 @@
   function screenFromHash(raw) {
     const name = raw || "home";
     if (name.indexOf("oware-") === 0) return "oware";
+    if (name.indexOf("xo-") === 0) return "xo";
     if (name.indexOf("dare-") === 0) return "dare";
     if (name.indexOf("ask-") === 0) return "ask";
     return screens.indexOf(name) === -1 ? "home" : name;
@@ -80,7 +82,7 @@
 
   const initial = (location.hash || "").slice(1);
   const start = screenFromHash(initial);
-  const shared = initial.indexOf("oware-") === 0 || initial.indexOf("dare-") === 0 || initial.indexOf("ask-") === 0;
+  const shared = initial.indexOf("oware-") === 0 || initial.indexOf("xo-") === 0 || initial.indexOf("dare-") === 0 || initial.indexOf("ask-") === 0;
   history.replaceState({ view: start }, "", start === "home" ? location.pathname + location.search : (shared ? "#" + initial : "#" + start));
   show(start);
 })();

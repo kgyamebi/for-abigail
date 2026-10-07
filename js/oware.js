@@ -177,7 +177,7 @@
       try { window.localStorage.setItem(recordKey, JSON.stringify(record)); } catch (e) { /* private mode */ }
     }
 
-    function northLabel() { return mode === "house" ? "The house" : "Friend"; }
+    function northLabel() { return mode === "house" ? "The house" : "Them"; }
 
     function paintRecord() {
       const played = record.you + record.house + record.draw;
@@ -274,7 +274,7 @@
       const lead = note;
       note = "";
       if (side === 0) say(lead + "Your turn. Sow from a house on your side.");
-      else if (mode === "friend") say(lead + "Friend’s turn. Their houses are the far row.");
+      else if (mode === "friend") say(lead + "Their turn. Pass this phone. The far row is theirs.");
       else say(lead + "The house is choosing.");
       render();
       if (mode === "friend" && handoff && window.Curtain) {
@@ -282,7 +282,7 @@
         const packed = encodeState();
         window.Curtain.show({
           title: mine ? "Your turn." : "Their turn.",
-          note: mine ? "The near row is yours." : "Hand the phone over. The far row is theirs.",
+          note: mine ? "This phone is yours. The near row is yours." : "Pass this phone. The far row is theirs.",
           link: location.origin + location.pathname + "#oware-" + packed,
           done: function () { handoff = false; }
         });

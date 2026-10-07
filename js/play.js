@@ -120,7 +120,7 @@
     boardLocked = true;
     window.Curtain.show({
       title: "Their turn.",
-      note: "Hand the phone over. Two cards.",
+      note: "Pass this phone. Two cards, then hand it back.",
       done: function () { boardLocked = false; }
     });
   }
