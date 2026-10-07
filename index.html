@@ -21,228 +21,234 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="preload" as="image" href="images/plate-1.jpg">
 </head>
-<body class="locked">
-  <canvas class="dust" id="dust" aria-hidden="true"></canvas>
-  <div class="grain" aria-hidden="true"></div>
-  <div class="cursor" id="cursor" aria-hidden="true"></div>
-  <div class="veil" id="veil" aria-hidden="true"></div>
+<body>
+  <a class="skip" href="#play-list">Skip to play</a>
   <div class="progress" aria-hidden="true"><span id="progress"></span></div>
 
-  <div class="intro" id="intro">
-    <div class="ambient" aria-hidden="true"></div>
-    <div class="intro-scroll">
-      <p class="eyebrow">16 October · Abigail and her mother</p>
-      <div class="intro-clock" id="intro-clock">
-        <p class="intro-today" id="intro-today" hidden>Today. Both of them.</p>
-        <div id="intro-grid">
-          <p class="intro-days"><span id="intro-days">–</span> <span id="intro-days-label">days</span></p>
-          <p class="intro-rest"><b id="intro-hours">00</b><span>h</span> <b id="intro-mins">00</b><span>m</span> <b id="intro-secs">00</b><span>s</span></p>
-        </div>
-      </div>
-      <p class="intro-label">Play now</p>
-      <div class="intro-games">
-        <button class="intro-feature" type="button" data-jump="oware"><span>Ghanaian game</span>Oware<small>With a friend, or the house</small></button>
-        <button type="button" data-jump="lights"><span>Game</span>Keep the lights</button>
-        <button type="button" data-jump="pairs"><span>Game</span>Pairs</button>
-        <button type="button" data-jump="passes"><span>Activity</span>Pass the phone</button>
-      </div>
-      <button class="enter" id="enter" type="button">Watch the film</button>
-      <p class="from">Kofi Asante</p>
+  <header class="bar">
+    <div class="bar-slot">
+      <button class="text" id="back" type="button" hidden>Home</button>
     </div>
-  </div>
-
-  <header class="topbar">
-    <span>Edition 01</span>
-    <a class="hall-jump" href="#hall" id="hall-jump">Activities</a>
-    <span>1 October 2026</span>
+    <p class="bar-title" id="bar-title">For Abigail</p>
+    <div class="bar-end">
+      <button class="text" id="play" type="button" aria-pressed="false" hidden><span id="play-label">Play</span></button>
+      <button class="text" id="sound" type="button" aria-pressed="false">Sound</button>
+    </div>
   </header>
 
-  <nav class="rail" aria-label="Page">
-    <a href="#title" data-spy="title">01</a>
-    <a href="#portrait" data-spy="portrait">02</a>
-    <a href="#still" data-spy="still">03</a>
-    <a href="#letter" data-spy="letter">04</a>
-    <a href="#sixteenth" data-spy="sixteenth">05</a>
-    <a href="#hall" data-spy="hall">06</a>
-    <a href="#stay" data-spy="stay">07</a>
-  </nav>
-
   <main id="main">
-    <section class="overture" id="overture">
-      <p class="overture-line"><span class="wide-only">Some moments aren’t meant to be posted.</span><span class="narrow-only">Some moments aren’t meant<br>to be posted.</span><br>They’re meant to be remembered.</p>
-    </section>
+    <section class="screen home" data-screen="home">
+      <div class="home-frame">
+        <div class="hero">
+          <p class="eyebrow" id="hero-kicker">16 October · Abigail and her mother</p>
+          <h1 id="hero-title">16 October</h1>
+          <div class="count" id="count">
+            <p class="count-days"><span id="cd-days">–</span> <span id="cd-days-label">days</span></p>
+            <p class="count-rest">
+              <span><b id="cd-hours">00</b><i>hours</i></span>
+              <span><b id="cd-mins">00</b><i>minutes</i></span>
+              <span><b id="cd-secs">00</b><i>seconds</i></span>
+            </p>
+          </div>
+          <p class="today-line" id="today-line">Both of them.</p>
+          <ol class="marks" id="marks" aria-hidden="true">
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+          </ol>
+          <p class="marks-caption">The first sixteen days of October. The last belongs to them.</p>
+          <p class="sr" id="cd-live" aria-live="polite"></p>
+        </div>
 
-    <section class="hero" id="title" data-spy-section="title">
-      <div class="bloom" aria-hidden="true"></div>
-      <p class="eyebrow hero-kicker">For one person</p>
-      <h1>
-        <span class="nm">Abigail</span>
-        <span class="nm">Horlali</span>
-        <span class="nm">Fiawoo.</span>
-      </h1>
-      <p class="by">From Kofi Asante</p>
-      <p class="scroll-hint">Scroll</p>
-    </section>
+        <div class="rail-col">
+          <div class="play-block" id="play-list">
+            <p class="eyebrow">Play</p>
+            <h2 class="block-title">Choose something.</h2>
+            <div class="dests">
+              <button class="dest dest-oware" type="button" data-go="oware">
+                <span class="dest-kicker">Akan game</span>
+                <span class="dest-title">Oware</span>
+                <span class="dest-note">Twelve houses, four seeds. With a friend, or the house.</span>
+              </button>
+              <button class="dest dest-lights" type="button" data-go="lights">
+                <span class="dest-kicker">Game</span>
+                <span class="dest-title">Keep the lights</span>
+                <span class="dest-note">Sixteen lights cross the dark. Touch one to keep it.</span>
+              </button>
+              <button class="dest dest-pairs" type="button" data-go="pairs">
+                <span class="dest-kicker">Game</span>
+                <span class="dest-title">Pairs</span>
+                <span class="dest-note">Eight pairs. The fewest turns win.</span>
+              </button>
+              <button class="dest dest-pass" type="button" data-go="pass">
+                <span class="dest-kicker">Together</span>
+                <span class="dest-title">Pass the phone</span>
+                <span class="dest-note">Read it. Do it. Hand it on.</span>
+              </button>
+            </div>
+          </div>
 
-    <section class="verse" id="v1">
-      <p>Nothing to prove here.</p>
-    </section>
-
-    <figure class="plate a" id="portrait" data-spy-section="portrait">
-      <div class="frame">
-        <img src="images/plate-1.jpg" width="471" height="838" alt="Abigail Horlali Fiawoo" decoding="async">
-      </div>
-      <figcaption>Scene I</figcaption>
-    </figure>
-
-    <section class="verse" id="v2">
-      <p>The night can keep the rest.</p>
-    </section>
-
-    <figure class="plate wide b" id="still" data-spy-section="still">
-      <div class="frame">
-        <img src="images/plate-2.jpg" width="471" height="284" alt="Abigail Horlali Fiawoo in the car" decoding="async">
-      </div>
-      <figcaption>Scene II</figcaption>
-    </figure>
-
-    <section class="verse" id="v3">
-      <p>Anyone else is only passing through.</p>
-    </section>
-
-    <figure class="plate dim c" id="light">
-      <div class="frame">
-        <img src="images/plate-3.jpg" width="471" height="780" alt="The cross Abigail Horlali Fiawoo wears" decoding="async">
-      </div>
-      <figcaption>Scene III</figcaption>
-    </figure>
-
-    <section class="letter-wrap" id="letter" data-spy-section="letter">
-      <article class="letter">
-        <p class="dateline">1 October 2026</p>
-        <h2 class="greeting">Abigail,</h2>
-        <p class="lead">I did not write a story around you. I left the room quiet and put your name in it.</p>
-        <p class="spoken">Abigail Horlali Fiawoo.</p>
-        <p>Read it slowly. That is why the type is this large.</p>
-        <p>The photographs are as you were. Nothing added. When the page ends, hold on. The light stays only while you do.</p>
-        <p class="sign">Kofi Asante</p>
-      </article>
-    </section>
-
-    <section class="day" id="sixteenth" data-spy-section="sixteenth">
-      <p class="eyebrow">16 October</p>
-      <h2 class="day-title">One day,<br>two birthdays.</h2>
-      <p class="day-note">Abigail and her mother share the date. Every year, the same one.</p>
-      <div class="clock" id="clock">
-        <p class="day-today" id="day-today" hidden>Today. Both of them.</p>
-        <div class="clock-grid" id="clock-grid">
-          <p class="clock-main"><span class="clock-num" id="cd-days">0</span><span class="clock-unit" id="cd-days-label">days</span></p>
-          <p class="clock-rest">
-            <span><b id="cd-hours">00</b> hours</span>
-            <span><b id="cd-mins">00</b> minutes</span>
-            <span><b id="cd-secs">00</b> seconds</span>
-          </p>
+          <button class="letter-door" type="button" data-go="story">
+            <span class="dest-kicker">The letter</span>
+            <span class="dest-title">Some moments aren’t meant to be posted.</span>
+            <span class="dest-note">Three photographs, and a page from Kofi Asante.</span>
+          </button>
+          <p class="colophon">Edition 01 · 1 October 2026</p>
         </div>
       </div>
-      <p class="sr" id="cd-live" aria-live="polite"></p>
-      <ol class="marks" id="marks" aria-hidden="true"></ol>
-      <p class="marks-caption">The first sixteen days of October. The last belongs to them.</p>
-      <ul class="pair">
-        <li>Abigail</li>
-        <li>Her mother</li>
-      </ul>
     </section>
 
-    <section class="hall" id="hall" data-spy-section="hall">
-      <p class="eyebrow">For Abigail and her friends</p>
-      <h2 class="day-title">Come here just to play.</h2>
-      <p class="day-note">Oware if you want the game people stay with. The others are here when you want something lighter. One phone is enough.</p>
-      <nav class="hall-nav" aria-label="Activities">
-        <a href="#oware">Oware</a>
-        <a href="#lights">Lights</a>
-        <a href="#pairs">Pairs</a>
-        <a href="#passes">Pass the phone</a>
-      </nav>
-
-      <div class="playfield" id="oware">
+    <section class="screen game" data-screen="oware" hidden>
+      <div class="game-frame" id="oware">
         <p class="eyebrow">From Ghana</p>
-        <h3>Oware</h3>
-        <p class="game-help">Four seeds in every house. Pick up a house on your side and sow one seed to the right, around the board. If your last seed leaves two or three on their side, those seeds are yours, and so are the twos and threes just before them. First to twenty-five.</p>
-        <div class="oware-modes" role="group" aria-label="Who is across the board">
-          <button class="text-btn is-on" id="oware-friend" type="button" aria-pressed="true">A friend</button>
-          <button class="text-btn" id="oware-house" type="button" aria-pressed="false">The house</button>
+        <h1>Oware</h1>
+        <p class="lede">Four seeds in every house. Pick up a house on your side and sow one seed to the right, around the board. If your last seed leaves two or three on their side, those seeds are yours, and so are the twos and threes just before them. First to twenty-five.</p>
+        <div class="choices" role="group" aria-label="Who is across the board">
+          <button class="choice is-on" id="oware-friend" type="button" aria-pressed="true">A friend</button>
+          <button class="choice" id="oware-house" type="button" aria-pressed="false">The house</button>
         </div>
-        <p class="oware-record" id="oware-record" hidden></p>
-        <p class="oware-turn" id="oware-turn">Your turn. Sow from a house on your side.</p>
+        <p class="record" id="oware-record" hidden></p>
+        <p class="turn" id="oware-turn" aria-live="polite">Your turn. Sow from a house on your side.</p>
         <div class="oware-table">
-          <p class="oware-who" id="oware-north"><b id="oware-n-count">0</b> <span id="oware-n-name">Friend</span></p>
+          <p class="who" id="oware-north"><b id="oware-n-count">0</b> <span id="oware-n-name">Friend</span></p>
           <div class="oware-board" id="oware-board" role="group" aria-label="Oware board"></div>
-          <p class="oware-who" id="oware-south"><b id="oware-s-count">0</b> <span>You</span></p>
+          <p class="who" id="oware-south"><b id="oware-s-count">0</b> <span>You</span></p>
         </div>
-        <p class="game-done" id="oware-done" hidden></p>
-        <button class="ghost" id="oware-again" type="button">New game</button>
+        <p class="done" id="oware-done" hidden></p>
+        <button class="quiet" id="oware-again" type="button">New game</button>
       </div>
+    </section>
 
-      <div class="playfield" id="lights">
+    <section class="screen game" data-screen="lights" hidden>
+      <div class="game-frame">
         <p class="eyebrow">Game</p>
-        <h3>Keep the lights</h3>
-        <p class="game-help">Sixteen lights cross the dark. Touch one to keep it. Play alone, or race the person beside you.</p>
-        <p class="game-score"><span id="kept">0</span> kept of 16</p>
-        <button class="text-btn" id="game-begin" type="button">Begin</button>
+        <h1>Keep the lights</h1>
+        <p class="lede">Sixteen lights cross the dark. Touch one to keep it. Play alone, or race the person beside you.</p>
+        <p class="score"><span id="kept">0</span> kept of 16</p>
+        <button class="solid" id="game-begin" type="button">Begin</button>
         <div class="sky" id="sky" hidden></div>
-        <p class="game-done" id="game-done" hidden>All sixteen. That’s their day.</p>
-        <button class="ghost game-again" id="game-again" type="button" hidden>Again</button>
+        <p class="done" id="game-done" hidden>All sixteen. That’s their day.</p>
+        <button class="quiet" id="game-again" type="button" hidden>Again</button>
       </div>
+    </section>
 
-      <div class="playfield" id="pairs">
+    <section class="screen game" data-screen="pairs" hidden>
+      <div class="game-frame">
         <p class="eyebrow">Game</p>
-        <h3>Pairs</h3>
-        <p class="game-help">Turn two cards. Take turns. The table with the fewest turns wins.</p>
-        <p class="game-score"><span id="pair-turns">0</span><span id="pair-turns-word"> turns</span> <span class="best" id="pair-best"></span></p>
-        <button class="text-btn" id="pairs-begin" type="button">Deal</button>
+        <h1>Pairs</h1>
+        <p class="lede">Turn two cards. Take turns. The table with the fewest turns wins.</p>
+        <p class="score"><span id="pair-turns">0</span><span id="pair-turns-word"> turns</span> <span class="best" id="pair-best"></span></p>
+        <button class="solid" id="pairs-begin" type="button">Deal</button>
         <div class="board" id="board" hidden></div>
-        <p class="game-done" id="pairs-done" hidden>Every pair found.</p>
-        <button class="ghost game-again" id="pairs-again" type="button" hidden>Deal again</button>
+        <p class="done" id="pairs-done" hidden>Every pair found.</p>
+        <button class="quiet" id="pairs-again" type="button" hidden>Deal again</button>
       </div>
+    </section>
 
-      <div class="playfield" id="passes">
-        <p class="eyebrow">Activity</p>
-        <h3>Pass the phone</h3>
-        <p class="game-help">Read the card out loud. Do it. Hand the phone to someone else.</p>
-        <button class="text-btn" id="pass-begin" type="button">Start a round</button>
+    <section class="screen game" data-screen="pass" hidden>
+      <div class="game-frame pass-frame">
+        <p class="eyebrow">Together</p>
+        <h1>Pass the phone</h1>
+        <div class="pass-ready" id="pass-ready">
+          <p class="ready-line">Ready?</p>
+          <button class="solid" id="pass-begin" type="button">Begin</button>
+        </div>
         <div class="pass-panel" id="pass-panel" hidden>
           <p class="round" id="pass-round">1 of 10</p>
           <p class="prompt" id="pass-prompt"></p>
           <div class="pass-actions">
-            <button class="ghost" id="pass-prev" type="button">Back</button>
-            <button class="text-btn" id="pass-next" type="button">Next</button>
+            <button class="solid" id="pass-next" type="button">Pass the phone</button>
+            <button class="quiet" id="pass-prev" type="button">Previous</button>
           </div>
+        </div>
+        <div class="pass-hand" id="pass-hand" hidden>
+          <p>Hand it over.</p>
         </div>
       </div>
     </section>
 
-    <section class="finale" id="stay" data-spy-section="stay">
-      <div class="glow" aria-hidden="true"></div>
-      <button class="hold-surface" id="hold" type="button" aria-describedby="hold-help">
-        <span class="rest">
-          <span class="eyebrow">Last</span>
-          <span class="rest-line" id="hold-help">Hold on.</span>
-        </span>
-        <span class="secret">
-          <span class="eyebrow secret-kicker">For</span>
-          <span class="secret-name">Abigail Horlali Fiawoo</span>
-          <span class="secret-from">Kofi Asante</span>
-        </span>
-      </button>
+    <section class="screen story" data-screen="story" hidden>
+      <section class="overture" id="overture">
+        <p class="overture-line">Some moments aren’t meant to be posted.<br>They’re meant to be remembered.</p>
+      </section>
+
+      <section class="nameplate" id="title">
+        <p class="eyebrow">For one person</p>
+        <h1>
+          <span class="nm">Abigail</span>
+          <span class="nm">Horlali</span>
+          <span class="nm">Fiawoo.</span>
+        </h1>
+        <p class="by">From Kofi Asante</p>
+        <p class="scroll-hint">Scroll</p>
+      </section>
+
+      <section class="verse" id="v1"><p>Nothing to prove here.</p></section>
+
+      <figure class="plate" id="portrait">
+        <div class="frame">
+          <img src="images/plate-1.jpg" width="471" height="838" alt="Abigail Horlali Fiawoo" decoding="async">
+        </div>
+        <figcaption>Scene I</figcaption>
+      </figure>
+
+      <section class="verse" id="v2"><p>The night can keep the rest.</p></section>
+
+      <figure class="plate wide" id="still">
+        <div class="frame">
+          <img src="images/plate-2.jpg" width="471" height="284" alt="Abigail Horlali Fiawoo in the car" decoding="async">
+        </div>
+        <figcaption>Scene II</figcaption>
+      </figure>
+
+      <section class="verse" id="v3"><p>Anyone else is only passing through.</p></section>
+
+      <figure class="plate" id="light">
+        <div class="frame">
+          <img src="images/plate-3.jpg" width="471" height="780" alt="The cross Abigail Horlali Fiawoo wears" decoding="async">
+        </div>
+        <figcaption>Scene III</figcaption>
+      </figure>
+
+      <section class="letter-wrap" id="letter">
+        <article class="letter">
+          <p class="dateline">1 October 2026</p>
+          <h2 class="greeting">Abigail,</h2>
+          <p class="lead">I did not write a story around you. I left the room quiet and put your name in it.</p>
+          <p class="spoken">Abigail Horlali Fiawoo.</p>
+          <p>Read it slowly. That is why the type is this large.</p>
+          <p>The photographs are as you were. Nothing added. When the page ends, hold on. The light stays only while you do.</p>
+          <p class="sign">Kofi Asante</p>
+        </article>
+      </section>
+
+      <section class="finale" id="stay">
+        <button class="hold" id="hold" type="button" aria-describedby="hold-help">
+          <span class="hold-rest">
+            <span class="eyebrow">Last</span>
+            <span class="hold-line" id="hold-help">Hold on.</span>
+          </span>
+          <span class="hold-secret">
+            <span class="eyebrow">For</span>
+            <span class="secret-name">Abigail Horlali Fiawoo</span>
+            <span class="secret-from">Kofi Asante</span>
+          </span>
+        </button>
+      </section>
     </section>
   </main>
 
-  <div class="dock">
-    <button class="ghost" id="sound" type="button" aria-pressed="false">Sound</button>
-    <button class="play" id="play" type="button" aria-pressed="false"><span id="play-label">Play</span></button>
-  </div>
-  <noscript><style>.intro,.veil{display:none}body{overflow:auto}.overture-line,.nm,.by,.scroll-hint{opacity:1}</style></noscript>
-  <script src="js/main.js"></script>
+  <noscript>
+    <style>
+      [data-screen] { display: block !important; }
+      .bar { position: static; }
+      .count, .today-line { display: none; }
+    </style>
+  </noscript>
+  <script src="js/audio.js"></script>
+  <script src="js/clock.js"></script>
+  <script src="js/play.js"></script>
   <script src="js/oware.js"></script>
+  <script src="js/story.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
