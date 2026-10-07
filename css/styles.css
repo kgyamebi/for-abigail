@@ -699,6 +699,60 @@ html.is-today .today-line { display: block; animation: arrive 0.9s var(--ease); 
   line-height: 1.25;
   letter-spacing: -0.03em;
 }
+.play-group { margin-top: 1.4rem; }
+.puzzle-face, .puzzle-target {
+  margin: 0.8rem 0 0;
+  font-family: var(--serif);
+  font-weight: 560;
+  font-style: italic;
+  font-size: clamp(2.4rem, 10vw, 4.2rem);
+  line-height: 1;
+  letter-spacing: 0.08em;
+}
+.puzzle-nums {
+  margin: 1rem 0 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.6rem, 6vw, 2.4rem);
+  letter-spacing: 0.12em;
+  color: var(--gold);
+}
+.puzzle-target { color: var(--cream); letter-spacing: -0.04em; }
+.play-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+.play-input {
+  min-height: 2.75rem;
+  width: min(18rem, 100%);
+  flex: 1 1 12rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--cream);
+  font: inherit;
+  font-size: 1rem;
+  padding: 0.6rem 1rem;
+}
+textarea.play-input { border-radius: 1.2rem; }
+.added {
+  list-style: none;
+  margin: 0.8rem 0 0;
+  padding: 0;
+  max-width: 28rem;
+}
+.added li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  align-items: baseline;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+#scramble-show, #chain-stuck, #make-pass, #closer-begin, #still-begin { margin-top: 0.8rem; }
 .pass-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; margin-top: 0.4rem; }
 .pass-hand { min-height: 40vh; display: grid; align-items: center; }
 

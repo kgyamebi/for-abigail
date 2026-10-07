@@ -90,6 +90,36 @@
                 <span class="dest-note">Read it. Do it. Hand it on.</span>
               </button>
             </div>
+            <div class="play-group">
+              <p class="eyebrow">Words</p>
+              <div class="dests">
+                <button class="dest" type="button" data-go="scramble">
+                  <span class="dest-kicker">Word</span>
+                  <span class="dest-title">Scramble</span>
+                  <span class="dest-note">Unscramble the word. Alone, or trade turns on this phone.</span>
+                </button>
+                <button class="dest" type="button" data-go="chain">
+                  <span class="dest-kicker">Word</span>
+                  <span class="dest-title">The chain</span>
+                  <span class="dest-note">A word from the book, from their last letter. Same phone, or the house.</span>
+                </button>
+              </div>
+            </div>
+            <div class="play-group">
+              <p class="eyebrow">Numbers</p>
+              <div class="dests">
+                <button class="dest" type="button" data-go="run">
+                  <span class="dest-kicker">Math</span>
+                  <span class="dest-title">The run</span>
+                  <span class="dest-note">One sum after another. The streak is the game. Alone, or this phone.</span>
+                </button>
+                <button class="dest" type="button" data-go="make">
+                  <span class="dest-kicker">Math</span>
+                  <span class="dest-title">Make it</span>
+                  <span class="dest-note">Four numbers, one target. Use each once. Alone, or same phone.</span>
+                </button>
+              </div>
+            </div>
             <div class="adult-block">
               <p class="eyebrow">Adults</p>
               <div class="dests">
@@ -102,6 +132,21 @@
                   <span class="dest-kicker">18+</span>
                   <span class="dest-title">Ask</span>
                   <span class="dest-note">One question. Say it out loud. Then hand the phone on.</span>
+                </button>
+                <button class="dest" type="button" data-go="closer">
+                  <span class="dest-kicker">18+</span>
+                  <span class="dest-title">Closer</span>
+                  <span class="dest-note">Each step gets nearer. Add your own before you begin. Stop whenever you want.</span>
+                </button>
+                <button class="dest" type="button" data-go="still">
+                  <span class="dest-kicker">18+</span>
+                  <span class="dest-title">Still</span>
+                  <span class="dest-note">Don’t move until they say. Add a rule of your own first. Enough ends it.</span>
+                </button>
+                <button class="dest" type="button" data-go="yours">
+                  <span class="dest-kicker">18+</span>
+                  <span class="dest-title">Yours</span>
+                  <span class="dest-note">Write what you want them to do. They can add theirs. Then the phone passes.</span>
                 </button>
               </div>
             </div>
@@ -189,6 +234,181 @@
         <div class="code-row">
           <button class="quiet" id="xo-again" type="button">New game</button>
           <button class="quiet" id="xo-copy" type="button">Copy the link</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen game" data-screen="scramble" hidden>
+      <div class="game-frame">
+        <p class="eyebrow">Word</p>
+        <h1>Scramble</h1>
+        <p class="lede">The letters are out of order. Put the word back. It gets longer as you keep going. No clock.</p>
+        <div class="choices" role="group" aria-label="How to play">
+          <button class="choice is-on" id="scramble-alone" type="button" aria-pressed="true">Alone</button>
+          <button class="choice" id="scramble-turns" type="button" aria-pressed="false">Same phone</button>
+        </div>
+        <p class="score"><span id="scramble-score">0 in a row</span><span class="best" id="scramble-best"></span></p>
+        <p class="turn" id="scramble-turn">Unscramble it.</p>
+        <p class="puzzle-face" id="scramble-face"></p>
+        <form id="scramble-form" class="play-form">
+          <input class="play-input" id="scramble-answer" type="text" autocomplete="off" autocapitalize="off" enterkeyhint="go" aria-label="The word" placeholder="The word">
+          <button class="solid" type="submit">Place it</button>
+        </form>
+        <button class="quiet" id="scramble-show" type="button">Show it</button>
+      </div>
+    </section>
+
+    <section class="screen game" data-screen="chain" hidden>
+      <div class="game-frame">
+        <p class="eyebrow">Word</p>
+        <h1>The chain</h1>
+        <p class="lede">A closed book of words. The next word starts with the last letter of this one. Same phone, or the house.</p>
+        <div class="choices" role="group" aria-label="How to play">
+          <button class="choice is-on" id="chain-house" type="button" aria-pressed="true">The house</button>
+          <button class="choice" id="chain-turns" type="button" aria-pressed="false">Same phone</button>
+        </div>
+        <p class="score" id="chain-score">0 words</p>
+        <p class="turn" id="chain-turn">Any word in the book.</p>
+        <p class="puzzle-face" id="chain-letter">Any</p>
+        <form id="chain-form" class="play-form">
+          <input class="play-input" id="chain-answer" type="text" autocomplete="off" autocapitalize="off" enterkeyhint="go" aria-label="Your word" placeholder="Your word">
+          <button class="solid" type="submit">Play it</button>
+        </form>
+        <button class="quiet" id="chain-stuck" type="button">I’m stuck</button>
+      </div>
+    </section>
+
+    <section class="screen game" data-screen="run" hidden>
+      <div class="game-frame">
+        <p class="eyebrow">Math</p>
+        <h1>The run</h1>
+        <p class="lede">Answer, then the next one. It gets harder while the streak holds. There is no clock.</p>
+        <div class="choices" role="group" aria-label="How to play">
+          <button class="choice is-on" id="run-alone" type="button" aria-pressed="true">Alone</button>
+          <button class="choice" id="run-turns" type="button" aria-pressed="false">Same phone</button>
+        </div>
+        <p class="score"><span id="run-score">0 in a row</span><span class="best" id="run-best"></span></p>
+        <p class="turn" id="run-turn">The next one.</p>
+        <p class="puzzle-face" id="run-face"></p>
+        <form id="run-form" class="play-form">
+          <input class="play-input" id="run-answer" type="number" inputmode="numeric" autocomplete="off" enterkeyhint="go" aria-label="Your answer" placeholder="Answer">
+          <button class="solid" type="submit">Next</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="screen game" data-screen="make" hidden>
+      <div class="game-frame">
+        <p class="eyebrow">Math</p>
+        <h1>Make it</h1>
+        <p class="lede">Four numbers, one target. Use each number once. + − × ÷ and brackets. A new one as soon as you make it.</p>
+        <div class="choices" role="group" aria-label="How to play">
+          <button class="choice is-on" id="make-alone" type="button" aria-pressed="true">Alone</button>
+          <button class="choice" id="make-turns" type="button" aria-pressed="false">Same phone</button>
+        </div>
+        <p class="score" id="make-score">0 made</p>
+        <p class="turn" id="make-turn">Use each number once.</p>
+        <p class="puzzle-nums" id="make-nums"></p>
+        <p class="puzzle-target" id="make-target"></p>
+        <form id="make-form" class="play-form">
+          <input class="play-input" id="make-answer" type="text" inputmode="text" autocomplete="off" autocapitalize="off" enterkeyhint="go" aria-label="Your expression" placeholder="6 × 3 + 4 + 2">
+          <button class="solid" type="submit">Make it</button>
+        </form>
+        <button class="quiet" id="make-pass" type="button">Their try</button>
+      </div>
+    </section>
+
+    <section class="screen game" data-screen="closer" hidden>
+      <div class="game-frame pass-frame">
+        <p class="eyebrow">18+</p>
+        <h1>Closer</h1>
+        <div class="gate" id="closer-gate">
+          <p class="lede">Adults only. Each step gets nearer. Either of you can stay, skip, or stop.</p>
+          <button class="solid" id="closer-yes" type="button">I’m an adult</button>
+          <button class="quiet" id="closer-no" type="button">Not now</button>
+        </div>
+        <div id="closer-setup" hidden>
+          <p class="lede">Add a step of your own, if you want. Pass the phone so they can add one too. Then begin.</p>
+          <div class="play-form">
+            <input class="play-input" id="closer-input" type="text" maxlength="180" autocomplete="off" enterkeyhint="done" aria-label="A step you want" placeholder="A step you want">
+            <button class="solid" id="closer-add" type="button">Add</button>
+          </div>
+          <ul class="added" id="closer-list"></ul>
+          <button class="solid" id="closer-begin" type="button">Begin</button>
+        </div>
+        <div id="closer-play" hidden>
+          <p class="round" id="closer-round">Step 1</p>
+          <p class="prompt" id="closer-prompt"></p>
+          <div class="pass-actions">
+            <button class="solid" id="closer-next" type="button">Closer</button>
+            <button class="quiet" id="closer-stay" type="button">Stay</button>
+            <button class="quiet" id="closer-skip" type="button">Skip</button>
+            <button class="quiet" id="closer-stop" type="button">Stop</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen game" data-screen="still" hidden>
+      <div class="game-frame pass-frame">
+        <p class="eyebrow">18+</p>
+        <h1>Still</h1>
+        <div class="gate" id="still-gate">
+          <p class="lede">Adults only. You hold still. They move. Enough ends it, whenever either of you wants.</p>
+          <button class="solid" id="still-yes" type="button">I’m an adult</button>
+          <button class="quiet" id="still-no" type="button">Not now</button>
+        </div>
+        <div id="still-setup" hidden>
+          <p class="lede">Add a rule of your own before it starts. Pass the phone if they want to add one too.</p>
+          <div class="play-form">
+            <input class="play-input" id="still-input" type="text" maxlength="180" autocomplete="off" enterkeyhint="done" aria-label="A rule you want" placeholder="A rule you want">
+            <button class="solid" id="still-add" type="button">Add</button>
+          </div>
+          <ul class="added" id="still-list"></ul>
+          <button class="solid" id="still-begin" type="button">Begin</button>
+        </div>
+        <div id="still-play" hidden>
+          <p class="round" id="still-round">Step 1</p>
+          <p class="prompt" id="still-prompt"></p>
+          <div class="pass-actions">
+            <button class="solid" id="still-next" type="button">I held</button>
+            <button class="quiet" id="still-skip" type="button">Skip</button>
+            <button class="quiet" id="still-stop" type="button">Enough</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen game" data-screen="yours" hidden>
+      <div class="game-frame pass-frame">
+        <p class="eyebrow">18+</p>
+        <h1>Yours</h1>
+        <div class="gate" id="yours-gate">
+          <p class="lede">Adults only. You write what happens. Either of you can skip. Stop when someone wants to.</p>
+          <button class="solid" id="yours-yes" type="button">I’m an adult</button>
+          <button class="quiet" id="yours-no" type="button">Not now</button>
+        </div>
+        <div id="yours-setup" hidden>
+          <p class="lede">Add what you want them to do. Pass this phone so they can add theirs. Then begin.</p>
+          <div class="play-form">
+            <input class="play-input" id="yours-input" type="text" maxlength="180" autocomplete="off" enterkeyhint="done" aria-label="What you want them to do" placeholder="What you want them to do">
+            <button class="solid" id="yours-add" type="button">Add</button>
+          </div>
+          <ul class="added" id="yours-list"></ul>
+          <div class="pass-actions">
+            <button class="solid" id="yours-begin" type="button">Begin</button>
+            <button class="choice" id="yours-mix" type="button" aria-pressed="false">Mix in starters</button>
+          </div>
+        </div>
+        <div id="yours-play" hidden>
+          <p class="round" id="yours-round">1</p>
+          <p class="prompt" id="yours-prompt"></p>
+          <div class="pass-actions">
+            <button class="solid" id="yours-next" type="button">Pass the phone</button>
+            <button class="quiet" id="yours-skip" type="button">Skip</button>
+            <button class="quiet" id="yours-again" type="button">Again</button>
+            <button class="quiet" id="yours-stop" type="button">Stop</button>
+          </div>
         </div>
       </div>
     </section>
@@ -369,7 +589,9 @@
   <script src="js/oware.js"></script>
   <script src="js/story.js"></script>
   <script src="js/adult.js"></script>
+  <script src="js/heat.js"></script>
   <script src="js/xo.js"></script>
+  <script src="js/puzzle.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
