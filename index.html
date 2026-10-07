@@ -41,6 +41,7 @@
       </div>
       <p class="intro-label">Play now</p>
       <div class="intro-games">
+        <button class="intro-feature" type="button" data-jump="oware"><span>Ghanaian game</span>Oware<small>With a friend, or the house</small></button>
         <button type="button" data-jump="lights"><span>Game</span>Keep the lights</button>
         <button type="button" data-jump="pairs"><span>Game</span>Pairs</button>
         <button type="button" data-jump="passes"><span>Activity</span>Pass the phone</button>
@@ -155,12 +156,32 @@
     <section class="hall" id="hall" data-spy-section="hall">
       <p class="eyebrow">For Abigail and her friends</p>
       <h2 class="day-title">Come here just to play.</h2>
-      <p class="day-note">One phone is enough. Pass it when a turn is over. Nothing here asks you to sign in.</p>
+      <p class="day-note">Oware if you want the game people stay with. The others are here when you want something lighter. One phone is enough.</p>
       <nav class="hall-nav" aria-label="Activities">
+        <a href="#oware">Oware</a>
         <a href="#lights">Lights</a>
         <a href="#pairs">Pairs</a>
         <a href="#passes">Pass the phone</a>
       </nav>
+
+      <div class="playfield" id="oware">
+        <p class="eyebrow">From Ghana</p>
+        <h3>Oware</h3>
+        <p class="game-help">Four seeds in every house. Pick up a house on your side and sow one seed to the right, around the board. If your last seed leaves two or three on their side, those seeds are yours, and so are the twos and threes just before them. First to twenty-five.</p>
+        <div class="oware-modes" role="group" aria-label="Who is across the board">
+          <button class="text-btn is-on" id="oware-friend" type="button" aria-pressed="true">A friend</button>
+          <button class="text-btn" id="oware-house" type="button" aria-pressed="false">The house</button>
+        </div>
+        <p class="oware-record" id="oware-record" hidden></p>
+        <p class="oware-turn" id="oware-turn">Your turn. Sow from a house on your side.</p>
+        <div class="oware-table">
+          <p class="oware-who" id="oware-north"><b id="oware-n-count">0</b> <span id="oware-n-name">Friend</span></p>
+          <div class="oware-board" id="oware-board" role="group" aria-label="Oware board"></div>
+          <p class="oware-who" id="oware-south"><b id="oware-s-count">0</b> <span>You</span></p>
+        </div>
+        <p class="game-done" id="oware-done" hidden></p>
+        <button class="ghost" id="oware-again" type="button">New game</button>
+      </div>
 
       <div class="playfield" id="lights">
         <p class="eyebrow">Game</p>
@@ -222,5 +243,6 @@
   </div>
   <noscript><style>.intro,.veil{display:none}body{overflow:auto}.overture-line,.nm,.by,.scroll-hint{opacity:1}</style></noscript>
   <script src="js/main.js"></script>
+  <script src="js/oware.js"></script>
 </body>
 </html>
