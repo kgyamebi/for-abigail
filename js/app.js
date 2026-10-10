@@ -1,5 +1,5 @@
 (function () {
-  const screens = ["home", "oware", "lights", "pairs", "xo", "guess", "pass", "scramble", "chain", "run", "make", "daily", "dare", "ask", "closer", "still", "yours", "between", "trade", "story"];
+  const screens = ["home", "oware", "lights", "pairs", "xo", "guess", "pass", "scramble", "chain", "run", "make", "daily", "dare", "ask", "closer", "still", "yours", "between", "trade", "wheel", "story"];
   const titles = {
     home: "For Abigail",
     oware: "Oware",
@@ -20,6 +20,7 @@
     yours: "Yours",
     between: "Between",
     trade: "Trade",
+    wheel: "The wheel",
     story: "The letter"
   };
   const back = document.getElementById("back");

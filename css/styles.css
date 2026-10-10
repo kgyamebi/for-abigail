@@ -286,6 +286,58 @@ html.is-kept .today-line { display: block; }
   color: var(--cream-dim);
   font-size: 0.92rem;
 }
+@property --day-x {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 50%;
+}
+@property --day-y {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 8%;
+}
+@property --day-a {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.08;
+}
+html.is-today {
+  transition: --day-x 1.1s linear, --day-y 1.1s linear, --day-a 1.1s linear;
+}
+html.is-today body {
+  background:
+    radial-gradient(ellipse 68% 46% at var(--day-x) var(--day-y), rgba(228, 200, 154, var(--day-a)), transparent 58%),
+    radial-gradient(ellipse 36% 28% at calc(var(--day-x) + 6%) calc(var(--day-y) + 10%), rgba(198, 160, 106, calc(var(--day-a) * 0.55)), transparent 52%),
+    #090807;
+}
+.day-clock {
+  display: none;
+  margin: 0.7rem 0 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+html.is-today .day-clock { display: block; }
+.hours {
+  display: none;
+  gap: 0.22rem;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+html.is-today .hours { display: flex; }
+.hours li {
+  flex: 1;
+  height: 2px;
+  border-radius: 1px;
+  background: rgba(228, 200, 154, 0.16);
+}
+.hours li.is-past { background: rgba(228, 200, 154, 0.5); }
+.hours li.is-now {
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(228, 200, 154, 0.85);
+}
 html[data-phase="dawn"] body {
   background: radial-gradient(ellipse at 50% -8%, rgba(228, 200, 154, 0.16), transparent 46%), var(--bg);
 }
@@ -343,6 +395,44 @@ html[data-phase="late"] .veil {
   background:
     radial-gradient(ellipse at 50% 30%, rgba(228, 200, 154, 0.08), transparent 46%),
     #070605;
+}
+html.is-today .veil {
+  background:
+    radial-gradient(ellipse 80% 52% at var(--day-x) var(--day-y), rgba(228, 200, 154, var(--day-a)), transparent 56%),
+    #090807;
+}
+.wheel-stage {
+  position: relative;
+  width: min(78vw, 18.5rem);
+  margin: 1.1rem auto 0;
+  aspect-ratio: 1;
+}
+.wheel {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid rgba(228, 200, 154, 0.45);
+  background: conic-gradient(#241c14, #14110e);
+}
+.wheel-pointer {
+  position: absolute;
+  top: -0.15rem;
+  left: 50%;
+  z-index: 2;
+  width: 0;
+  height: 0;
+  transform: translateX(-50%);
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 12px solid var(--gold);
+}
+.wheel-hub {
+  position: absolute;
+  inset: 31%;
+  border-radius: 50%;
+  background: #090807;
+  border: 1px solid rgba(228, 200, 154, 0.4);
+  pointer-events: none;
 }
 
 .marks {

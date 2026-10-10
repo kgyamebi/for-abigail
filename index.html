@@ -51,6 +51,8 @@
             </p>
           </div>
           <p class="today-line" id="today-line">Both of them.</p>
+          <p class="day-clock" id="day-clock"></p>
+          <ol class="hours" id="hours" aria-hidden="true"></ol>
           <ol class="marks" id="marks" aria-hidden="true">
             <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
             <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
@@ -173,6 +175,11 @@
                   <span class="dest-kicker">18+</span>
                   <span class="dest-title">Trade</span>
                   <span class="dest-note">Write what they will do. They write yours. Then you exchange them.</span>
+                </button>
+                <button class="dest" type="button" data-go="wheel">
+                  <span class="dest-kicker">18+</span>
+                  <span class="dest-title">The wheel</span>
+                  <span class="dest-note">Spin. A different wheel every time. Skip anything. Stop when someone wants to.</span>
                 </button>
               </div>
             </div>
@@ -354,10 +361,11 @@
           <button class="quiet" id="closer-no" type="button">Not now</button>
         </div>
         <div id="closer-setup" hidden>
-          <p class="lede">Add a step of your own, if you want. Pass the phone so they can add one too. Then begin.</p>
+          <p class="lede">Add a step of your own, or let the page deal a few. Press it again for a different set. Then begin.</p>
           <div class="play-form">
             <input class="play-input" id="closer-input" type="text" maxlength="180" autocomplete="off" enterkeyhint="done" aria-label="A step you want" placeholder="A step you want">
             <button class="solid" id="closer-add" type="button">Add</button>
+            <button class="quiet" id="closer-surprise" type="button">Surprise us</button>
           </div>
           <ul class="added" id="closer-list"></ul>
           <button class="solid" id="closer-begin" type="button">Begin</button>
@@ -385,10 +393,11 @@
           <button class="quiet" id="still-no" type="button">Not now</button>
         </div>
         <div id="still-setup" hidden>
-          <p class="lede">Add a rule of your own before it starts. Pass the phone if they want to add one too.</p>
+          <p class="lede">Add a rule of your own, or let the page deal a few. Press it again for a different set.</p>
           <div class="play-form">
             <input class="play-input" id="still-input" type="text" maxlength="180" autocomplete="off" enterkeyhint="done" aria-label="A rule you want" placeholder="A rule you want">
             <button class="solid" id="still-add" type="button">Add</button>
+            <button class="quiet" id="still-surprise" type="button">Surprise us</button>
           </div>
           <ul class="added" id="still-list"></ul>
           <button class="solid" id="still-begin" type="button">Begin</button>
@@ -415,10 +424,11 @@
           <button class="quiet" id="yours-no" type="button">Not now</button>
         </div>
         <div id="yours-setup" hidden>
-          <p class="lede">Add what you want them to do. Pass this phone so they can add theirs. Then begin.</p>
+          <p class="lede">Add what you want them to do, or let the page deal a set. Another press deals a different one. Then begin.</p>
           <div class="play-form">
             <input class="play-input" id="yours-input" type="text" maxlength="180" autocomplete="off" enterkeyhint="done" aria-label="What you want them to do" placeholder="What you want them to do">
             <button class="solid" id="yours-add" type="button">Add</button>
+            <button class="quiet" id="yours-surprise" type="button">Surprise us</button>
           </div>
           <ul class="added" id="yours-list"></ul>
           <div class="pass-actions">
@@ -483,10 +493,11 @@
           <button class="quiet" id="between-no" type="button">Not now</button>
         </div>
         <div id="between-setup" hidden>
-          <p class="lede">Add a step of your own, if you want. Pass the phone so they can add one too. Then begin.</p>
+          <p class="lede">Add a step of your own, or let the page deal a few. Press it again for a different set. Then begin.</p>
           <div class="play-form">
             <input class="play-input" id="between-input" type="text" maxlength="180" autocomplete="off" enterkeyhint="done" aria-label="A step you want" placeholder="A step you want">
             <button class="solid" id="between-add" type="button">Add</button>
+            <button class="quiet" id="between-surprise" type="button">Surprise us</button>
           </div>
           <ul class="added" id="between-list"></ul>
           <button class="solid" id="between-begin" type="button">Begin</button>
@@ -514,10 +525,11 @@
           <button class="quiet" id="trade-no" type="button">Not now</button>
         </div>
         <div id="trade-setup" hidden>
-          <p class="lede">Add what you want them to do. Pass the phone and let them add what they want from you. Then begin.</p>
+          <p class="lede">Add what you want them to do, or let the page deal a set. Another press deals a different one. Then begin.</p>
           <div class="play-form">
             <input class="play-input" id="trade-input" type="text" maxlength="180" autocomplete="off" enterkeyhint="done" aria-label="What you want them to do" placeholder="What you want them to do">
             <button class="solid" id="trade-add" type="button">Add</button>
+            <button class="quiet" id="trade-surprise" type="button">Surprise us</button>
           </div>
           <ul class="added" id="trade-list"></ul>
           <button class="solid" id="trade-begin" type="button">Begin</button>
@@ -529,6 +541,34 @@
             <button class="solid" id="trade-next" type="button">Pass the phone</button>
             <button class="quiet" id="trade-skip" type="button">Skip</button>
             <button class="quiet" id="trade-stop" type="button">Stop</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen game" data-screen="wheel" hidden>
+      <div class="game-frame pass-frame">
+        <p class="eyebrow">18+</p>
+        <h1>The wheel</h1>
+        <div class="gate" id="wheel-gate">
+          <p class="lede">Adults only. Spin, then do what it lands on, or skip it. Stop when someone wants to.</p>
+          <button class="solid" id="wheel-yes" type="button">I’m an adult</button>
+          <button class="quiet" id="wheel-no" type="button">Not now</button>
+        </div>
+        <div id="wheel-play" hidden>
+          <p class="lede">A different wheel every spin. Either of you can skip.</p>
+          <div class="wheel-stage">
+            <div class="wheel-pointer" aria-hidden="true"></div>
+            <div class="wheel" id="wheel"></div>
+            <div class="wheel-hub" aria-hidden="true"></div>
+          </div>
+          <p class="round" id="wheel-round"></p>
+          <p class="prompt" id="wheel-prompt" aria-live="polite"></p>
+          <div class="pass-actions">
+            <button class="solid" id="wheel-spin" type="button">Spin</button>
+            <button class="quiet" id="wheel-hand" type="button" hidden>Hand it over</button>
+            <button class="quiet" id="wheel-skip" type="button">Skip</button>
+            <button class="quiet" id="wheel-stop" type="button">Stop</button>
           </div>
         </div>
       </div>
