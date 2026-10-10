@@ -27,6 +27,9 @@
     "yacht", "yellow", "yogurt",
     "zebra", "zenith", "zest"
   ];
+  ["quest", "quilt", "quake", "quiver", "xylem", "yarn", "yearn", "yeast", "yield", "young", "yonder", "zinc", "zipper", "zodiac", "zonal", "unique", "upper", "urban", "utter", "useful", "umbra", "union", "usher", "velvet", "cinder", "cobalt", "dune", "ember", "fjord", "glen", "harp", "inlet", "jasper", "kelp", "lark", "mirth", "nectar", "onyx", "plume", "quartz", "reed", "sable", "thorn", "vapor", "wren"].forEach(function (word) {
+    if (BOOK.indexOf(word) === -1) BOOK.push(word);
+  });
   const known = {};
   BOOK.forEach(function (word) { known[word] = true; });
 
@@ -77,7 +80,14 @@
     let scrambleThem = 0;
     let scrambleYours = true;
     let scrambleLast = "";
+    const scrambleLeft = { short: [], mid: [], long: [] };
 
+    function bandKey() {
+      const n = scrambleMode === "alone" ? scrambleStreak : Math.max(scrambleYou, scrambleThem);
+      if (n < 5) return "short";
+      if (n < 12) return "mid";
+      return "long";
+    }
     function scrambleBag() {
       const n = scrambleMode === "alone" ? scrambleStreak : Math.max(scrambleYou, scrambleThem);
       return BOOK.filter(function (word) {
@@ -87,11 +97,12 @@
       });
     }
     function dealScramble() {
-      const bag = scrambleBag();
-      const pool = bag.length ? bag : BOOK;
-      let word = pool[Math.floor(Math.random() * pool.length)];
-      if (pool.length > 1) {
-        while (word === scrambleLast) word = pool[Math.floor(Math.random() * pool.length)];
+      const key = bandKey();
+      if (!scrambleLeft[key].length) scrambleLeft[key] = shuffle(scrambleBag().length ? scrambleBag() : BOOK);
+      let word = scrambleLeft[key].pop();
+      if (word === scrambleLast && scrambleLeft[key].length) {
+        scrambleLeft[key].unshift(word);
+        word = scrambleLeft[key].pop();
       }
       scrambleLast = word;
       scrambleWord = word;

@@ -146,10 +146,15 @@
                   <span class="dest-title">Truth or dare</span>
                   <span class="dest-note">One phone between you. Skip anything. Stop when someone wants to.</span>
                 </button>
+                <button class="dest" type="button" data-go="further">
+                  <span class="dest-kicker">18+</span>
+                  <span class="dest-title">Further</span>
+                  <span class="dest-note">Truth or dare, much further in. A long deck. Nothing repeats until you have been through it.</span>
+                </button>
                 <button class="dest" type="button" data-go="ask">
                   <span class="dest-kicker">18+</span>
                   <span class="dest-title">Ask</span>
-                  <span class="dest-note">One question. Say it out loud. Then hand the phone on.</span>
+                  <span class="dest-note">One question. A long list, so it does not repeat on you. Then hand the phone on.</span>
                 </button>
                 <button class="dest" type="button" data-go="closer">
                   <span class="dest-kicker">18+</span>
@@ -574,6 +579,44 @@
       </div>
     </section>
 
+    <section class="screen game" data-screen="further" hidden>
+      <div class="game-frame pass-frame">
+        <p class="eyebrow">18+</p>
+        <h1>Further</h1>
+        <div class="gate" id="further-gate">
+          <p class="lede">Adults only. Further than the first truth or dare. Skip anything. Stop when someone wants to.</p>
+          <button class="solid" id="further-yes" type="button">I’m an adult</button>
+          <button class="quiet" id="further-no" type="button">Not now</button>
+        </div>
+        <div id="further-play" hidden>
+          <p class="lede">One phone. Two long decks. Nothing in them repeats until that deck has been used.</p>
+          <div class="code-row">
+            <p class="round" id="further-code">----</p>
+            <button class="quiet" id="further-copy" type="button">Copy link</button>
+            <input id="further-join" type="text" maxlength="4" autocapitalize="characters" autocomplete="off" enterkeyhint="go" aria-label="Their code" placeholder="Code">
+          </div>
+          <div id="further-choose">
+            <p class="ready-line">Your turn.</p>
+            <div class="pass-actions">
+              <button class="solid" id="further-truth" type="button">Truth</button>
+              <button class="solid" id="further-dare" type="button">Dare</button>
+              <button class="quiet" id="further-skip" type="button">Skip</button>
+              <button class="quiet" id="further-stop" type="button">Stop</button>
+            </div>
+          </div>
+          <div id="further-card" hidden>
+            <p class="round" id="further-kind">Truth</p>
+            <p class="prompt" id="further-prompt"></p>
+            <div class="pass-actions">
+              <button class="solid" id="further-done" type="button">Pass the phone</button>
+              <button class="quiet" id="further-another" type="button">A different one</button>
+              <button class="quiet" id="further-end" type="button">Stop</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="screen game" data-screen="dare" hidden>
       <div class="game-frame pass-frame" id="dare-root">
         <p class="eyebrow">18+</p>
@@ -757,7 +800,9 @@
   <script src="js/play.js"></script>
   <script src="js/oware.js"></script>
   <script src="js/story.js"></script>
+  <script src="js/long.js"></script>
   <script src="js/adult.js"></script>
+  <script src="js/further.js"></script>
   <script src="js/heat.js"></script>
   <script src="js/xo.js"></script>
   <script src="js/puzzle.js"></script>

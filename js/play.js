@@ -253,7 +253,8 @@
   }
 
   function startPass() {
-    passOrder = shuffle(prompts);
+    const more = window.AbigailLong ? window.AbigailLong.pass : [];
+    passOrder = shuffle(prompts.concat(more));
     passIndex = 0;
     passReady.hidden = true;
     showPrompt();
@@ -267,7 +268,12 @@
     passHand.hidden = false;
     blip();
     handTimer = window.setTimeout(function () {
-      passIndex = (passIndex + 1) % passOrder.length;
+      passIndex += 1;
+      if (passIndex >= passOrder.length) {
+        const more = window.AbigailLong ? window.AbigailLong.pass : [];
+        passOrder = shuffle(prompts.concat(more));
+        passIndex = 0;
+      }
       showPrompt();
     }, reduced ? 0 : 700);
   });

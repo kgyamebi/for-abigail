@@ -116,8 +116,16 @@
     let index = 0;
     nodes.codeEl.textContent = code;
 
-    function card() { return deck[index % deck.length]; }
-    function advance() { index = (index + 1) % deck.length; }
+    let lap = 0;
+    function card() { return deck[index]; }
+    function advance() {
+      index += 1;
+      if (index < deck.length) return;
+      lap += 1;
+      index = 0;
+      deck = shuffleWith(list, code + ":" + lap);
+    }
+    function place() { return (index + 1) + " of " + deck.length; }
 
     nodes.copy.addEventListener("click", function () {
       copyLink(code, prefix).then(function () { nodes.copy.textContent = "Copied"; });
@@ -132,7 +140,7 @@
       nodes.input.value = "";
       if (nodes.onJoin) nodes.onJoin();
     });
-    return { card: card, advance: advance };
+    return { card: card, advance: advance, place: place };
   }
 
   const dareGate = document.getElementById("dare-gate");
@@ -237,7 +245,8 @@
   const askPlay = document.getElementById("ask-play");
   const askPrompt = document.getElementById("ask-prompt");
   const askRound = document.getElementById("ask-round");
-  const askDeck = setupDeck("ask", questions, {
+  const askList = questions.concat(window.AbigailLong ? window.AbigailLong.ask : []);
+  const askDeck = setupDeck("ask", askList, {
     codeEl: document.getElementById("ask-code"),
     copy: document.getElementById("ask-copy"),
     input: document.getElementById("ask-join"),
@@ -246,7 +255,7 @@
 
   function paintAsk() {
     askPrompt.textContent = askDeck.card();
-    askRound.textContent = "Read this one.";
+    askRound.textContent = askDeck.place();
   }
 
   function openAsk() {

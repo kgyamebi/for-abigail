@@ -105,6 +105,11 @@
     "Trade places: they tell you what to do, for one minute, and you can refuse one thing.",
     "A kiss on the shoulder, then the jaw, then they decide if there is a third."
   ];
+  if (window.AbigailLong) {
+    window.AbigailLong.dares.forEach(function (line) {
+      if (pool.indexOf(line) === -1) pool.push(line);
+    });
+  }
   function shuffle(list) {
     const copy = list.slice();
     for (let i = copy.length - 1; i > 0; i--) {
@@ -197,11 +202,15 @@
 
     function showCard() {
       const card = deck[index];
-      round.textContent = card.own ? "Yours · " + (index + 1) : "Step " + (index + 1);
+      round.textContent = (card.own ? "Yours · " : "") + (index + 1) + " of " + deck.length;
       prompt.textContent = card.text;
     }
     function begin() {
-      deck = weave(steps, items);
+      const scripted = weave(steps, items);
+      const seen = {};
+      scripted.forEach(function (card) { seen[card.text] = true; });
+      const rest = shuffle(pool.filter(function (line) { return !seen[line]; }));
+      deck = scripted.concat(rest.map(function (text) { return { text: text, own: false }; }));
       index = 0;
       setup.hidden = true;
       play.hidden = false;
@@ -299,7 +308,12 @@
 
     function build() {
       const own = items.slice();
-      if (mix || !own.length) return (own.length ? own.concat(starters) : starters.slice());
+      if (mix || !own.length) {
+        const seen = {};
+        own.forEach(function (line) { seen[line] = true; });
+        const rest = shuffle(pool.filter(function (line) { return !seen[line]; }));
+        return own.length ? own.concat(rest) : rest;
+      }
       return own;
     }
     function showCard() {
@@ -339,7 +353,7 @@
       blip();
       index += 1;
       if (index >= deck.length) {
-        yoursPrompt.textContent = "That’s everything you wrote.";
+        yoursPrompt.textContent = "That’s the end of this deck.";
         yoursRound.textContent = "Again, or stop.";
         return;
       }
@@ -389,7 +403,7 @@
       tradePrompt.textContent = deck[index];
     }
     function begin() {
-      deck = items.length ? items.slice() : starters.slice();
+      deck = items.length ? items.slice() : shuffle(pool.slice());
       index = 0;
       tradeSetup.hidden = true;
       tradePlay.hidden = false;
@@ -411,7 +425,7 @@
       blip();
       index += 1;
       if (index >= deck.length) {
-        tradePrompt.textContent = "That’s the trade.";
+        tradePrompt.textContent = "That’s the end of this deck.";
         tradeRound.textContent = "Again, or stop.";
         return;
       }
@@ -441,7 +455,7 @@
     const reducedSpin = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let rotation = 0;
     let spinning = false;
-    let last = [];
+    let bag = [];
     let forThem = false;
     let landed = "";
     let seam = 0;
@@ -458,13 +472,14 @@
       wheelEl.style.background = "conic-gradient(from " + seam.toFixed(2) + "deg, " + parts.join(",") + ")";
     }
     function dealWheel() {
-      const have = {};
-      last.forEach(function (line) { have[line] = true; });
-      let fresh = shuffle(pool.filter(function (line) { return !have[line]; }));
-      if (fresh.length < 8) fresh = shuffle(pool);
-      const eight = fresh.slice(0, 8);
-      last = eight.slice();
-      return eight;
+      if (bag.length < 8) {
+        const hold = {};
+        bag.forEach(function (line) { hold[line] = true; });
+        const more = shuffle(pool.filter(function (line) { return !hold[line]; }));
+        bag = bag.concat(more);
+        if (bag.length < 8) bag = shuffle(pool.slice());
+      }
+      return bag.splice(0, 8);
     }
     function showLanded() {
       if (!spinning) return;
