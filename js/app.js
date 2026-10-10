@@ -40,7 +40,10 @@
     play.hidden = name !== "story";
     const today = document.documentElement.classList.contains("is-today");
     barTitle.textContent = name === "home" && today ? "Today" : titles[name];
-    if (name === "home" && window.AbigailDay) window.AbigailDay.welcome();
+    if (name === "home" && window.AbigailDay) {
+      window.AbigailDay.welcome();
+      window.AbigailDay.anticipate();
+    }
     document.title = name === "home" ? "For Abigail" : titles[name] + " · For Abigail";
     if (name !== "story" && window.AbigailStory) window.AbigailStory.stop();
     if (window.Curtain && name !== "oware") window.Curtain.hide();

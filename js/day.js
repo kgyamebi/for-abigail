@@ -40,19 +40,42 @@
   const kicker = document.getElementById("hero-kicker");
   const caption = document.querySelector(".marks-caption");
   const nextNote = document.getElementById("next-note");
+  const waitNote = document.getElementById("wait-note");
   const dayClock = document.getElementById("day-clock");
   const hourList = document.getElementById("hours");
   const live = document.getElementById("cd-live");
   const veil = document.getElementById("veil");
   const veilKicker = document.getElementById("veil-kicker");
+  const veilName = document.getElementById("veil-name");
   const veilLine = document.getElementById("veil-line");
+  const veilPromise = document.getElementById("veil-promise");
   const veilGo = document.getElementById("veil-go");
+  const nameHtml = veilName ? veilName.innerHTML : "";
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let mode = "approach";
   let phase = hours[0];
   let latest = new Date();
   let veilTimer = 0;
   let lastSpoken = "";
+  let waited = false;
+  const waiting = [
+    "",
+    "October has started. The page is early.",
+    "Something is being kept for the sixteenth.",
+    "The light on this page has not risen yet.",
+    "Come back. It will not look like this.",
+    "The sixteenth is the day this page was made for.",
+    "Her name is in the room. It is not on the door yet.",
+    "The day has not opened. That is the point of waiting.",
+    "Anyone who only comes once will miss it.",
+    "This is still the countdown. It will not stay that way.",
+    "The tenth. What you are looking at is not the day.",
+    "On the sixteenth it changes, and then it keeps changing.",
+    "Open it more than once that day. The hour will not match.",
+    "The gold is not here yet.",
+    "Tomorrow is still tomorrow.",
+    "Tomorrow the page belongs to them. Stay for another hour. It will have changed."
+  ];
 
   function hash(str) {
     let h = 2166136261;
@@ -147,9 +170,16 @@
       if (title) title.textContent = "16 October";
       if (caption) caption.textContent = "The first sixteen days of October. The last belongs to them.";
       if (nextNote) nextNote.hidden = true;
-      hideVeil();
+      if (waitNote) waitNote.hidden = false;
+      if (veil && !veil.hidden && !veil.classList.contains("is-waiting")) hideVeil();
+      if (document.body.getAttribute("data-screen") === "home") anticipate();
       paintDaily(now);
       return;
+    }
+    if (waitNote) waitNote.hidden = true;
+    if (veil && veil.classList.contains("is-waiting")) {
+      hideVeil();
+      restoreName();
     }
     const nextTitle = onDay ? phase.title : phase.keptTitle;
     const nextLine = onDay ? phase.line : phase.keptLine;
@@ -183,7 +213,39 @@
     window.clearTimeout(veilTimer);
     if (!veil) return;
     veil.hidden = true;
+    veil.classList.remove("is-waiting");
     document.body.classList.remove("is-veiled");
+  }
+  function restoreName() {
+    veil.classList.remove("is-waiting");
+    if (veilName) veilName.innerHTML = nameHtml;
+    if (veilGo) veilGo.textContent = "Come in";
+    if (veilPromise) veilPromise.hidden = true;
+    veil.setAttribute("aria-labelledby", "veil-name");
+  }
+  function anticipate() {
+    if (mode !== "approach" || !veil || waited) return;
+    if (document.body.getAttribute("data-screen") !== "home") return;
+    waited = true;
+    const day = latest.getDate();
+    const tease = waiting[day] || waiting[15];
+    veil.classList.add("is-waiting");
+    veil.setAttribute("aria-labelledby", "veil-line");
+    if (veilKicker) veilKicker.textContent = "Before the sixteenth";
+    if (veilName) veilName.textContent = "16";
+    if (veilLine) veilLine.textContent = tease;
+    if (veilPromise) veilPromise.hidden = false;
+    if (veilGo) veilGo.textContent = "I’ll wait";
+    veil.hidden = false;
+    document.body.classList.add("is-veiled");
+    if (veilGo) veilGo.focus();
+    const spoken = tease + " On the 16th this opens with her name.";
+    if (live && spoken !== lastSpoken) {
+      lastSpoken = spoken;
+      live.textContent = spoken;
+    }
+    window.clearTimeout(veilTimer);
+    if (!reduced) veilTimer = window.setTimeout(hideVeil, 9000);
   }
   function welcome() {
     if (mode !== "birthday" || !veil) return;
@@ -193,6 +255,7 @@
     try { seen = window.sessionStorage.getItem("abigail-veil") || ""; } catch (err) { seen = ""; }
     if (seen === token) return;
     try { window.sessionStorage.setItem("abigail-veil", token); } catch (err) { /* show it anyway */ }
+    restoreName();
     if (veilKicker) veilKicker.textContent = phase.kicker;
     if (veilLine) veilLine.textContent = phase.line;
     veil.hidden = false;
@@ -307,6 +370,7 @@
     season: season,
     sync: paint,
     welcome: welcome,
+    anticipate: anticipate,
     hide: hideVeil
   };
 })();

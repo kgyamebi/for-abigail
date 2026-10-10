@@ -384,6 +384,29 @@ html[data-phase="late"] body {
   color: var(--cream-dim);
   font-size: 1.05rem;
 }
+.veil-promise {
+  max-width: 22em;
+  margin: 0;
+  color: var(--cream);
+  font-size: 1.02rem;
+}
+.veil.is-waiting {
+  background:
+    radial-gradient(ellipse 55% 42% at 50% 78%, rgba(228, 200, 154, 0.08), transparent 62%),
+    #070605;
+}
+.veil.is-waiting .veil-name {
+  max-width: none;
+  font-style: normal;
+  font-size: clamp(6.4rem, 32vw, 12rem);
+  letter-spacing: -0.07em;
+}
+.wait-note {
+  max-width: 22rem;
+  margin: 0.85rem 0 0;
+  color: var(--gold);
+  font-size: 0.95rem;
+}
 body.is-veiled { overflow: hidden; }
 html[data-phase="gold"] .veil {
   background:
