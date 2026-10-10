@@ -177,8 +177,21 @@
     if (allowed()) open();
   }
 
+  const betweenSteps = [
+    "Sit with a hand’s width between you. Don’t close it yet.",
+    "Look at them until the quiet gets heavy. Don’t fill it.",
+    "Move one inch closer. Then stop.",
+    "Tell them what that inch cost. One sentence.",
+    "They decide the next inch. You don’t take it yourself.",
+    "Breathe on the same count. Four in, four out. Still not touching.",
+    "Put your mouth near their ear. Say nothing.",
+    "They may close the distance. You stay until they do, or until they don’t.",
+    "Ask whether to keep the gap, or end it. Accept the answer.",
+    "The last inch is theirs. They take it, or they leave it."
+  ];
   mountLadder("closer", closerSteps);
   mountLadder("still", stillSteps);
+  mountLadder("between", betweenSteps);
 
   const yoursGate = document.getElementById("yours-gate");
   const yoursSetup = document.getElementById("yours-setup");
@@ -262,6 +275,64 @@
         showCard();
       }
     });
+    if (allowed()) open();
+  }
+
+  const tradeGate = document.getElementById("trade-gate");
+  const tradeSetup = document.getElementById("trade-setup");
+  const tradePlay = document.getElementById("trade-play");
+  if (tradeGate && tradeSetup && tradePlay) {
+    const tradeInput = document.getElementById("trade-input");
+    const tradeList = document.getElementById("trade-list");
+    const tradePrompt = document.getElementById("trade-prompt");
+    const tradeRound = document.getElementById("trade-round");
+    const items = [];
+    let deck = [];
+    let index = 0;
+    mountList(tradeInput, document.getElementById("trade-add"), tradeList, items);
+    function showCard() {
+      tradeRound.textContent = (index + 1) + " of " + deck.length;
+      tradePrompt.textContent = deck[index];
+    }
+    function begin() {
+      deck = items.length ? items.slice() : starters.slice();
+      index = 0;
+      tradeSetup.hidden = true;
+      tradePlay.hidden = false;
+      showCard();
+    }
+    function open() {
+      tradeGate.hidden = true;
+      tradeSetup.hidden = false;
+      tradePlay.hidden = true;
+    }
+    document.getElementById("trade-yes").addEventListener("click", function () { allow(); open(); });
+    document.getElementById("trade-no").addEventListener("click", function () { document.getElementById("back").click(); });
+    document.getElementById("trade-begin").addEventListener("click", begin);
+    document.getElementById("trade-next").addEventListener("click", function () {
+      if (index >= deck.length) {
+        begin();
+        return;
+      }
+      blip();
+      index += 1;
+      if (index >= deck.length) {
+        tradePrompt.textContent = "That’s the trade.";
+        tradeRound.textContent = "Again, or stop.";
+        return;
+      }
+      window.Curtain.show({
+        title: "Their turn.",
+        note: "Pass this phone. This one was written for them.",
+        done: showCard
+      });
+    });
+    document.getElementById("trade-skip").addEventListener("click", function () {
+      index += 1;
+      if (index >= deck.length) index = 0;
+      showCard();
+    });
+    document.getElementById("trade-stop").addEventListener("click", function () { document.getElementById("back").click(); });
     if (allowed()) open();
   }
 })();

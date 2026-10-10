@@ -1,21 +1,25 @@
 (function () {
-  const screens = ["home", "oware", "lights", "pairs", "xo", "pass", "scramble", "chain", "run", "make", "dare", "ask", "closer", "still", "yours", "story"];
+  const screens = ["home", "oware", "lights", "pairs", "xo", "guess", "pass", "scramble", "chain", "run", "make", "daily", "dare", "ask", "closer", "still", "yours", "between", "trade", "story"];
   const titles = {
     home: "For Abigail",
     oware: "Oware",
     lights: "Keep the lights",
     pairs: "Pairs",
     xo: "Tic tac toe",
+    guess: "Higher or lower",
     pass: "Pass the phone",
     scramble: "Scramble",
     chain: "The chain",
     run: "The run",
     make: "Make it",
+    daily: "The day",
     dare: "Truth or dare",
     ask: "Ask",
     closer: "Closer",
     still: "Still",
     yours: "Yours",
+    between: "Between",
+    trade: "Trade",
     story: "The letter"
   };
   const back = document.getElementById("back");
@@ -34,6 +38,7 @@
     play.hidden = name !== "story";
     const today = document.documentElement.classList.contains("is-today");
     barTitle.textContent = name === "home" && today ? "Today" : titles[name];
+    if (name === "home" && window.AbigailDay) window.AbigailDay.welcome();
     document.title = name === "home" ? "For Abigail" : titles[name] + " · For Abigail";
     if (name !== "story" && window.AbigailStory) window.AbigailStory.stop();
     if (window.Curtain && name !== "oware") window.Curtain.hide();

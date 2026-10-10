@@ -56,6 +56,7 @@
             <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
           </ol>
           <p class="marks-caption">The first sixteen days of October. The last belongs to them.</p>
+          <p class="next-note" id="next-note" hidden>The next 16 October will come. This page is not waiting for it.</p>
           <p class="sr" id="cd-live" aria-live="polite"></p>
         </div>
 
@@ -83,6 +84,11 @@
                 <span class="dest-kicker">Game</span>
                 <span class="dest-title">Tic tac toe</span>
                 <span class="dest-note">Three in a row. Same phone, you then them, or the house.</span>
+              </button>
+              <button class="dest" type="button" data-go="guess">
+                <span class="dest-kicker">Game</span>
+                <span class="dest-title">Higher or lower</span>
+                <span class="dest-note">A number from 1 to 50. Alone, or take turns on this phone.</span>
               </button>
               <button class="dest dest-pass" type="button" data-go="pass">
                 <span class="dest-kicker">Together</span>
@@ -120,6 +126,16 @@
                 </button>
               </div>
             </div>
+            <div class="play-group">
+              <p class="eyebrow">Each day</p>
+              <div class="dests">
+                <button class="dest" type="button" data-go="daily">
+                  <span class="dest-kicker">Today</span>
+                  <span class="dest-title">The day</span>
+                  <span class="dest-note">One word, then one number. A different pair at midnight, including after the sixteenth.</span>
+                </button>
+              </div>
+            </div>
             <div class="adult-block">
               <p class="eyebrow">Adults</p>
               <div class="dests">
@@ -147,6 +163,16 @@
                   <span class="dest-kicker">18+</span>
                   <span class="dest-title">Yours</span>
                   <span class="dest-note">Write what you want them to do. They can add theirs. Then the phone passes.</span>
+                </button>
+                <button class="dest" type="button" data-go="between">
+                  <span class="dest-kicker">18+</span>
+                  <span class="dest-title">Between</span>
+                  <span class="dest-note">The space between you closes only when you allow it. Add your own. Stop when you want.</span>
+                </button>
+                <button class="dest" type="button" data-go="trade">
+                  <span class="dest-kicker">18+</span>
+                  <span class="dest-title">Trade</span>
+                  <span class="dest-note">Write what they will do. They write yours. Then you exchange them.</span>
                 </button>
               </div>
             </div>
@@ -413,6 +439,101 @@
       </div>
     </section>
 
+    <section class="screen game" data-screen="guess" hidden>
+      <div class="game-frame">
+        <p class="eyebrow">Game</p>
+        <h1>Higher or lower</h1>
+        <p class="lede">The house has a number from 1 to 50. Guess until you find it. Same phone, you trade guesses.</p>
+        <div class="choices" role="group" aria-label="How to play">
+          <button class="choice is-on" id="guess-alone" type="button" aria-pressed="true">Alone</button>
+          <button class="choice" id="guess-turns" type="button" aria-pressed="false">Same phone</button>
+        </div>
+        <p class="score"><span id="guess-score">0 guesses</span><span class="best" id="guess-best"></span></p>
+        <p class="turn" id="guess-turn">Higher or lower.</p>
+        <p class="puzzle-face" id="guess-face">1 – 50</p>
+        <form id="guess-form" class="play-form">
+          <input class="play-input" id="guess-answer" type="number" min="1" max="50" inputmode="numeric" autocomplete="off" enterkeyhint="go" aria-label="Your guess" placeholder="1 to 50">
+          <button class="solid" type="submit">Guess</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="screen game" data-screen="daily" hidden>
+      <div class="game-frame">
+        <p class="eyebrow" id="day-kicker">Changes at midnight</p>
+        <h1>The day</h1>
+        <p class="lede">One word, then one number. Everyone who opens the page on this date gets the same pair. At midnight, it changes. It keeps going after the sixteenth.</p>
+        <p class="turn" id="day-turn">The word first.</p>
+        <p class="puzzle-face" id="day-face"></p>
+        <p class="puzzle-nums" id="day-sum"></p>
+        <form id="day-form" class="play-form">
+          <input class="play-input" id="day-answer" type="text" autocomplete="off" autocapitalize="off" enterkeyhint="go" aria-label="Your answer" placeholder="Your answer">
+          <button class="solid" type="submit">Place it</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="screen game" data-screen="between" hidden>
+      <div class="game-frame pass-frame">
+        <p class="eyebrow">18+</p>
+        <h1>Between</h1>
+        <div class="gate" id="between-gate">
+          <p class="lede">Adults only. The space between you is the game. Either of you can stay, skip, or stop.</p>
+          <button class="solid" id="between-yes" type="button">I’m an adult</button>
+          <button class="quiet" id="between-no" type="button">Not now</button>
+        </div>
+        <div id="between-setup" hidden>
+          <p class="lede">Add a step of your own, if you want. Pass the phone so they can add one too. Then begin.</p>
+          <div class="play-form">
+            <input class="play-input" id="between-input" type="text" maxlength="180" autocomplete="off" enterkeyhint="done" aria-label="A step you want" placeholder="A step you want">
+            <button class="solid" id="between-add" type="button">Add</button>
+          </div>
+          <ul class="added" id="between-list"></ul>
+          <button class="solid" id="between-begin" type="button">Begin</button>
+        </div>
+        <div id="between-play" hidden>
+          <p class="round" id="between-round">Step 1</p>
+          <p class="prompt" id="between-prompt"></p>
+          <div class="pass-actions">
+            <button class="solid" id="between-next" type="button">Closer</button>
+            <button class="quiet" id="between-stay" type="button">Stay</button>
+            <button class="quiet" id="between-skip" type="button">Skip</button>
+            <button class="quiet" id="between-stop" type="button">Stop</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen game" data-screen="trade" hidden>
+      <div class="game-frame pass-frame">
+        <p class="eyebrow">18+</p>
+        <h1>Trade</h1>
+        <div class="gate" id="trade-gate">
+          <p class="lede">Adults only. You write theirs. They write yours. Skip anything. Stop when someone wants to.</p>
+          <button class="solid" id="trade-yes" type="button">I’m an adult</button>
+          <button class="quiet" id="trade-no" type="button">Not now</button>
+        </div>
+        <div id="trade-setup" hidden>
+          <p class="lede">Add what you want them to do. Pass the phone and let them add what they want from you. Then begin.</p>
+          <div class="play-form">
+            <input class="play-input" id="trade-input" type="text" maxlength="180" autocomplete="off" enterkeyhint="done" aria-label="What you want them to do" placeholder="What you want them to do">
+            <button class="solid" id="trade-add" type="button">Add</button>
+          </div>
+          <ul class="added" id="trade-list"></ul>
+          <button class="solid" id="trade-begin" type="button">Begin</button>
+        </div>
+        <div id="trade-play" hidden>
+          <p class="round" id="trade-round">1</p>
+          <p class="prompt" id="trade-prompt"></p>
+          <div class="pass-actions">
+            <button class="solid" id="trade-next" type="button">Pass the phone</button>
+            <button class="quiet" id="trade-skip" type="button">Skip</button>
+            <button class="quiet" id="trade-stop" type="button">Stop</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="screen game" data-screen="dare" hidden>
       <div class="game-frame pass-frame" id="dare-root">
         <p class="eyebrow">18+</p>
@@ -568,6 +689,13 @@
     </section>
   </main>
 
+  <div class="veil" id="veil" role="dialog" aria-modal="true" aria-labelledby="veil-name" hidden>
+    <p class="eyebrow" id="veil-kicker">16 October</p>
+    <p class="veil-name" id="veil-name">Abigail<br>Horlali<br>Fiawoo.</p>
+    <p class="veil-line" id="veil-line"></p>
+    <button class="solid" id="veil-go" type="button">Come in</button>
+  </div>
+
   <div class="curtain" id="curtain" hidden>
     <p class="ready-line" id="curtain-title">Their turn.</p>
     <p class="lede" id="curtain-note">Hand the phone over.</p>
@@ -584,6 +712,7 @@
   </noscript>
   <script src="js/curtain.js"></script>
   <script src="js/audio.js"></script>
+  <script src="js/day.js"></script>
   <script src="js/clock.js"></script>
   <script src="js/play.js"></script>
   <script src="js/oware.js"></script>
@@ -592,6 +721,7 @@
   <script src="js/heat.js"></script>
   <script src="js/xo.js"></script>
   <script src="js/puzzle.js"></script>
+  <script src="js/more.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

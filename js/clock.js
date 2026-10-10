@@ -60,7 +60,16 @@
       li.classList.toggle("is-lit", onDay || (approaching && now.getDate() >= day));
     });
 
-    if (onDay) {
+    if (window.AbigailDay) {
+      const mode = window.AbigailDay.season(now);
+      if (mode === "birthday" || mode === "kept") {
+        marks.forEach(function (li) { li.classList.add("is-lit"); });
+        window.AbigailDay.sync(now, mode);
+        wasOnDay = mode === "birthday";
+        return;
+      }
+      window.AbigailDay.sync(now, "approach");
+    } else if (onDay) {
       if (wasOnDay === false) enterToday(true);
       else if (!document.documentElement.classList.contains("is-today")) enterToday(false);
       if (lastLive !== "today") {
@@ -70,6 +79,8 @@
       wasOnDay = true;
       return;
     }
+
+    if (onDay) return;
 
     wasOnDay = false;
     let diff = target.getTime() - now.getTime();
