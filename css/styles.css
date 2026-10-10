@@ -408,6 +408,8 @@ html[data-phase="late"] body {
   font-size: 0.95rem;
 }
 body.is-veiled { overflow: hidden; }
+body.is-opening,
+body.is-opening .bar button { pointer-events: none; }
 html[data-phase="gold"] .veil {
   background:
     radial-gradient(ellipse at 50% 36%, rgba(228, 200, 154, 0.34), transparent 54%),
