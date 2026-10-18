@@ -869,6 +869,8 @@ html.is-today .party-rail {
 }
 .party-run-rev { animation-duration: 38s; animation-direction: reverse; }
 .party-run span { color: var(--cream); }
+.party-run span.is-rose { color: var(--rose); }
+.party-run span.is-gold { color: var(--gold); }
 .tiny-cake,
 .tiny-candle {
   position: relative;
@@ -1060,7 +1062,8 @@ html.is-today .balloon::after {
   animation-duration: 1.15s;
   background: radial-gradient(circle at 40% 30%, #fff, #f3b6c8 48%, #d47a96 72%, transparent 76%);
 }
-.party-run { animation-duration: 26s; }
+.party-run { animation-duration: 58s; }
+.party-run-rev { animation-duration: 68s; }
 html.is-today .float-cake {
   width: 3.15rem;
   height: 2.75rem;
