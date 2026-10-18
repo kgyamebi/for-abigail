@@ -34,6 +34,15 @@
     { id: "evening", from: 19, keptTitle: "Evening.", keptLine: "Come in. Leave when you want." },
     { id: "late", from: 22, keptTitle: "The night.", keptLine: "The letter is where it was." }
   ];
+  const afterLines = {
+    17: "Yesterday she turned 18. The candles did not go out.",
+    18: "She turned 18 on 16 October. The page is still celebrating.",
+    19: "She is 18. 16 October was the day. This is still the room.",
+    20: "Four days on, and her eighteenth is still on this page.",
+    21: "She turned 18 on 16 October. Anyone who opens this still walks into it.",
+    22: "The sixteenth was her eighteenth. Stay with the light.",
+    23: "A week of her eighteenth. The candles are still here."
+  };
   const words = ["amber", "river", "moon", "velvet", "night", "pearl", "flame", "willow", "garden", "silver", "honey", "cedar", "storm", "linen", "coral", "quiet", "maple", "orchid", "frost", "harbor", "lotus", "thunder", "saffron", "meadow", "crystal", "lantern", "blossom", "ivory", "canyon", "sparrow", "comet", "willow", "piano", "saffron", "tiger", "island", "bronze", "feather", "galaxy", "jasmine"];
   const title = document.getElementById("hero-title");
   const line = document.getElementById("today-line");
@@ -101,8 +110,12 @@
     const month = now.getMonth();
     const date = now.getDate();
     if (month === 9 && date === 16) return "birthday";
+    if (month === 9 && date > 16 && date <= 23) return "afterglow";
     if (month === 9 && date < 16) return "approach";
     return "kept";
+  }
+  function afterWish(now) {
+    return afterLines[now.getDate()] || afterLines[18];
   }
   function keptFor(now) {
     const hour = now.getHours();
@@ -151,21 +164,36 @@
     latest = now;
     mode = nextMode;
     const onDay = mode === "birthday";
+    const glowing = mode === "afterglow";
+    const fest = onDay || glowing;
     phase = onDay ? hours[now.getHours()] : keptFor(now);
     const root = document.documentElement;
     if (onDay) root.dataset.phase = phase.id;
     else if (mode === "kept") root.dataset.phase = phase.id;
-    root.classList.toggle("is-today", onDay);
+    else if (glowing) root.dataset.phase = "glow";
+    root.classList.toggle("is-today", fest);
+    root.classList.toggle("is-after", glowing);
     root.classList.toggle("is-kept", mode === "kept");
-    placeLight(now, onDay);
+    const theme = document.querySelector('meta[name="theme-color"]');
+    if (theme) theme.setAttribute("content", fest ? "#1a1014" : "#090807");
+    placeLight(now, fest);
     paintHours(now, onDay);
     if (dayClock) {
       dayClock.textContent = onDay
         ? "16 October · " + pad(now.getHours()) + ":" + pad(now.getMinutes()) + ":" + pad(now.getSeconds())
-        : "";
+        : glowing
+          ? "16 October · she turned 18"
+          : "";
+    }
+    const colophon = document.getElementById("birthday-colophon");
+    if (colophon) {
+      colophon.textContent = fest
+        ? "16 October 2026 · She turned 18"
+        : "16 October · Her birthday";
     }
     if (mode === "approach") {
       root.removeAttribute("data-phase");
+      root.classList.remove("is-after");
       if (kicker) kicker.textContent = "16 October · Abigail and her mother";
       if (title) title.textContent = "16 October";
       if (caption) caption.textContent = "The first sixteen days of October. The last belongs to them.";
@@ -181,25 +209,48 @@
       hideVeil();
       restoreName();
     }
+    if (glowing) {
+      const wish = afterWish(now);
+      const changed = line && line.textContent !== wish;
+      if (title) title.textContent = "Eighteen.";
+      if (line) line.textContent = wish;
+      if (kicker) kicker.textContent = "16 October · she turned 18";
+      if (caption) caption.textContent = "Abigail Horlali Fiawoo. She turned 18 on 16 October.";
+      if (nextNote) nextNote.hidden = true;
+      if (live && wish !== lastSpoken) {
+        lastSpoken = wish;
+        live.textContent = wish;
+      }
+      const bar = document.getElementById("bar-title");
+      if (bar && document.body.getAttribute("data-screen") === "home") bar.textContent = "She is 18";
+      if (!reduced && changed && line) {
+        line.classList.remove("is-new");
+        void line.offsetWidth;
+        line.classList.add("is-new");
+      }
+      if (document.body.getAttribute("data-screen") === "home") linger();
+      paintDaily(now);
+      return;
+    }
     const nextTitle = onDay ? phase.title : phase.keptTitle;
     const nextLine = onDay ? phase.line : phase.keptLine;
     const changed = line && line.textContent !== nextLine;
     if (title) title.textContent = nextTitle;
     if (line) line.textContent = nextLine;
     if (kicker) kicker.textContent = onDay ? phase.kicker : "After the sixteenth";
-    if (caption) caption.textContent = onDay ? "The sixteenth. It changes as the hours do." : "The sixteenth was theirs. The page stayed.";
+    if (caption) caption.textContent = onDay ? "The sixteenth. She turned 18. It changes as the hours do." : "She turned 18 on 16 October. The page stayed.";
     if (nextNote) {
       nextNote.hidden = onDay;
       nextNote.textContent = "The next 16 October will come. This page is not waiting for it.";
     }
-    const spoken = onDay ? "Today is 16 October. " + phase.line : phase.keptLine;
+    const spoken = onDay ? "Today is 16 October. She turned 18. " + phase.line : phase.keptLine;
     if (live && spoken !== lastSpoken) {
       lastSpoken = spoken;
       live.textContent = spoken;
     }
     const bar = document.getElementById("bar-title");
     if (bar && document.body.getAttribute("data-screen") === "home") {
-      bar.textContent = onDay ? "Today" : "For Abigail";
+      bar.textContent = onDay ? "Her birthday" : "For Abigail";
     }
     if (!reduced && changed && line) {
       line.classList.remove("is-new");
@@ -256,13 +307,30 @@
     if (seen === token) return;
     try { window.sessionStorage.setItem("abigail-veil", token); } catch (err) { /* show it anyway */ }
     restoreName();
-    if (veilKicker) veilKicker.textContent = phase.kicker;
+    if (veilKicker) veilKicker.textContent = "She is 18 · " + phase.kicker;
     if (veilLine) veilLine.textContent = phase.line;
     veil.hidden = false;
     document.body.classList.add("is-veiled");
     if (veilGo) veilGo.focus();
     window.clearTimeout(veilTimer);
-    if (!reduced) veilTimer = window.setTimeout(hideVeil, 9000);
+    if (!reduced) veilTimer = window.setTimeout(hideVeil, 11000);
+  }
+  function linger() {
+    if (mode !== "afterglow" || !veil) return;
+    if (document.body.getAttribute("data-screen") !== "home") return;
+    const token = dateKey(latest) + ":after";
+    let seen = "";
+    try { seen = window.sessionStorage.getItem("abigail-veil") || ""; } catch (err) { seen = ""; }
+    if (seen === token) return;
+    try { window.sessionStorage.setItem("abigail-veil", token); } catch (err) { /* show it anyway */ }
+    restoreName();
+    if (veilKicker) veilKicker.textContent = "She turned 18";
+    if (veilLine) veilLine.textContent = afterWish(latest);
+    veil.hidden = false;
+    document.body.classList.add("is-veiled");
+    if (veilGo) veilGo.focus();
+    window.clearTimeout(veilTimer);
+    if (!reduced) veilTimer = window.setTimeout(hideVeil, 12000);
   }
   if (veilGo) veilGo.addEventListener("click", hideVeil);
 
@@ -305,8 +373,15 @@
   function paintDaily(now) {
     if (!dayFace) return;
     const stamp = dateKey(now);
-    const onDay = season(now) === "birthday";
-    if (dayKicker) dayKicker.textContent = onDay ? "Their day" : "Changes at midnight";
+    const nowSeason = season(now);
+    const onDay = nowSeason === "birthday";
+    if (dayKicker) {
+      dayKicker.textContent = onDay
+        ? "Their day"
+        : nowSeason === "afterglow"
+          ? "She is 18"
+          : "Changes at midnight";
+    }
     if (stamp === dayStamp) return;
     dayStamp = stamp;
     const puzzle = puzzleFor(now);
@@ -370,6 +445,7 @@
     season: season,
     sync: paint,
     welcome: welcome,
+    linger: linger,
     anticipate: anticipate,
     hide: hideVeil
   };

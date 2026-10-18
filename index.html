@@ -18,12 +18,28 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,460;0,9..144,560;1,9..144,460;1,9..144,560&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=20261010">
+  <link rel="stylesheet" href="css/styles.css?v=20261018">
   <link rel="preload" as="image" href="images/plate-1.jpg">
 </head>
 <body>
   <a class="skip" href="#play-list">Skip to play</a>
   <div class="progress" aria-hidden="true"><span id="progress"></span></div>
+  <div class="party-rail party-rail-top" aria-hidden="true">
+    <div class="party-run">
+      <span>Happy 18th</span><i class="tiny-cake rose"></i>
+      <span>Abigail Horlali Fiawoo</span><i class="tiny-candle gold"></i>
+      <span>She turned 18</span><i class="tiny-cake gold"></i>
+      <span>16 October</span><i class="tiny-candle rose"></i>
+      <span>The sixteenth is hers</span><i class="tiny-cake cream"></i>
+      <span>Happy birthday</span><i class="tiny-candle"></i>
+      <span>Abigail Horlali Fiawoo</span><i class="tiny-cake rose"></i>
+      <span>Eighteen</span><i class="tiny-candle gold"></i>
+      <span>She turned 18</span><i class="tiny-cake gold"></i>
+      <span>16 October 2026</span><i class="tiny-candle rose"></i>
+    </div>
+  </div>
+  <div class="edge-candles edge-left" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="edge-candles edge-right" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
   <header class="bar">
     <div class="bar-slot">
@@ -41,6 +57,7 @@
       <div class="home-frame">
         <div class="hero">
           <p class="eyebrow" id="hero-kicker">16 October · Abigail and her mother</p>
+          <p class="age-mark" aria-hidden="true">18</p>
           <h1 id="hero-title">16 October</h1>
           <div class="count" id="count">
             <p class="count-days"><span id="cd-days">–</span> <span id="cd-days-label">days</span></p>
@@ -51,7 +68,22 @@
             </p>
           </div>
           <p class="today-line" id="today-line">Both of them.</p>
+          <p class="age-ribbon">She turned 18 on 16 October</p>
           <p class="day-clock" id="day-clock"></p>
+          <div class="feast" aria-hidden="true">
+            <p class="feast-kicker">Happy eighteenth</p>
+            <div class="cake cake-hero">
+              <div class="candles candles-18">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
+              <div class="tier tier-3"></div>
+              <div class="tier tier-2"></div>
+              <div class="tier tier-1"></div>
+              <div class="dish"></div>
+            </div>
+            <p class="feast-name">Abigail Horlali Fiawoo</p>
+          </div>
           <ol class="hours" id="hours" aria-hidden="true"></ol>
           <ol class="marks" id="marks" aria-hidden="true">
             <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
@@ -196,6 +228,7 @@
             <span class="dest-title">Some moments aren’t meant to be posted.</span>
             <span class="dest-note">Three photographs, and a page from Kofi Asante.</span>
           </button>
+          <p class="birthday-colophon" id="birthday-colophon">16 October 2026 · She turned 18</p>
           <p class="colophon">Edition 01 · 1 October 2026</p>
         </div>
       </div>
@@ -774,11 +807,56 @@
   </main>
 
   <div class="veil" id="veil" role="dialog" aria-modal="true" aria-labelledby="veil-name" hidden>
+    <p class="veil-age" aria-hidden="true">18</p>
+    <p class="veil-wish">Happy eighteenth.</p>
     <p class="eyebrow" id="veil-kicker">16 October</p>
     <p class="veil-name" id="veil-name">Abigail<br>Horlali<br>Fiawoo.</p>
     <p class="veil-line" id="veil-line"></p>
+    <div class="veil-feast" aria-hidden="true">
+      <div class="cake cake-veil">
+        <div class="candles candles-18">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="tier tier-3"></div>
+        <div class="tier tier-2"></div>
+        <div class="tier tier-1"></div>
+        <div class="dish"></div>
+      </div>
+    </div>
     <p class="veil-promise" id="veil-promise" hidden>On the 16th this opens with her name. It will not be the same hour twice. Come back that day, and come back again later.</p>
     <button class="solid" id="veil-go" type="button">Come in</button>
+  </div>
+
+  <div class="party" aria-hidden="true">
+    <span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
+    <span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
+    <span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
+    <span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span>
+    <span class="balloon rose"></span>
+    <span class="balloon gold"></span>
+    <span class="balloon blush"></span>
+    <span class="balloon cream"></span>
+    <span class="float-cake rose"></span>
+    <span class="float-cake gold"></span>
+    <span class="float-cake cream"></span>
+    <span class="float-candle a"></span>
+    <span class="float-candle b"></span>
+    <span class="float-candle c"></span>
+  </div>
+  <div class="party-rail party-rail-foot" aria-hidden="true">
+    <div class="party-run party-run-rev">
+      <span>She turned 18</span><i class="tiny-candle rose"></i>
+      <span>Abigail Horlali Fiawoo</span><i class="tiny-cake gold"></i>
+      <span>Happy eighteenth</span><i class="tiny-candle gold"></i>
+      <span>16 October</span><i class="tiny-cake rose"></i>
+      <span>Candles for her</span><i class="tiny-candle"></i>
+      <span>She turned 18</span><i class="tiny-cake cream"></i>
+      <span>Abigail Horlali Fiawoo</span><i class="tiny-candle rose"></i>
+      <span>Happy birthday</span><i class="tiny-cake gold"></i>
+      <span>16 October 2026</span><i class="tiny-candle gold"></i>
+      <span>Stay as long as you like</span><i class="tiny-cake rose"></i>
+    </div>
   </div>
 
   <div class="curtain" id="curtain" hidden>
@@ -795,20 +873,20 @@
       .count, .today-line { display: none; }
     </style>
   </noscript>
-  <script src="js/curtain.js?v=20261010"></script>
-  <script src="js/audio.js?v=20261010"></script>
-  <script src="js/day.js?v=20261010"></script>
-  <script src="js/clock.js?v=20261010"></script>
-  <script src="js/play.js?v=20261010"></script>
-  <script src="js/oware.js?v=20261010"></script>
-  <script src="js/story.js?v=20261010"></script>
-  <script src="js/long.js?v=20261010"></script>
-  <script src="js/adult.js?v=20261010"></script>
-  <script src="js/further.js?v=20261010"></script>
-  <script src="js/heat.js?v=20261010"></script>
-  <script src="js/xo.js?v=20261010"></script>
-  <script src="js/puzzle.js?v=20261010"></script>
-  <script src="js/more.js?v=20261010"></script>
-  <script src="js/app.js?v=20261010"></script>
+  <script src="js/curtain.js?v=20261018"></script>
+  <script src="js/audio.js?v=20261018"></script>
+  <script src="js/day.js?v=20261018"></script>
+  <script src="js/clock.js?v=20261018"></script>
+  <script src="js/play.js?v=20261018"></script>
+  <script src="js/oware.js?v=20261018"></script>
+  <script src="js/story.js?v=20261018"></script>
+  <script src="js/long.js?v=20261018"></script>
+  <script src="js/adult.js?v=20261018"></script>
+  <script src="js/further.js?v=20261018"></script>
+  <script src="js/heat.js?v=20261018"></script>
+  <script src="js/xo.js?v=20261018"></script>
+  <script src="js/puzzle.js?v=20261018"></script>
+  <script src="js/more.js?v=20261018"></script>
+  <script src="js/app.js?v=20261018"></script>
 </body>
 </html>

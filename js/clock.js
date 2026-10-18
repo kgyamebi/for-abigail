@@ -44,7 +44,7 @@
       hero.classList.remove("is-leaving");
       root.classList.add("is-today");
       const bar = document.getElementById("bar-title");
-      if (bar && document.body.getAttribute("data-screen") === "home") bar.textContent = "Today";
+      if (bar && document.body.getAttribute("data-screen") === "home") bar.textContent = "Her birthday";
     }, 640);
   }
 
@@ -62,10 +62,10 @@
 
     if (window.AbigailDay) {
       const mode = window.AbigailDay.season(now);
-      if (mode === "birthday" || mode === "kept") {
+      if (mode === "birthday" || mode === "afterglow" || mode === "kept") {
         marks.forEach(function (li) { li.classList.add("is-lit"); });
         window.AbigailDay.sync(now, mode);
-        wasOnDay = mode === "birthday";
+        wasOnDay = mode === "birthday" || mode === "afterglow";
         return;
       }
       window.AbigailDay.sync(now, "approach");

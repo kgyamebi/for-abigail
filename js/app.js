@@ -61,14 +61,22 @@
     if (back) back.hidden = name === "home";
     if (play) play.hidden = name !== "story";
     const today = document.documentElement.classList.contains("is-today");
-    if (barTitle) barTitle.textContent = name === "home" && today ? "Today" : (titles[name] || name);
+    const after = document.documentElement.classList.contains("is-after");
+    if (barTitle) {
+      barTitle.textContent = name === "home" && today
+        ? (after ? "She is 18" : "Her birthday")
+        : (titles[name] || name);
+    }
+    document.title = name === "home"
+      ? (today ? (after ? "She is 18 · For Abigail" : "Happy 18th Abigail") : "For Abigail")
+      : (titles[name] || name) + " · For Abigail";
     if (name === "home" && window.AbigailDay) {
       window.AbigailDay.welcome();
+      if (window.AbigailDay.linger) window.AbigailDay.linger();
       window.AbigailDay.anticipate();
     } else if (name !== "home" && window.AbigailDay) {
       window.AbigailDay.hide();
     }
-    document.title = name === "home" ? "For Abigail" : (titles[name] || name) + " · For Abigail";
     if (name !== "story" && window.AbigailStory) window.AbigailStory.stop();
     if (window.Curtain && name !== "oware") window.Curtain.hide();
     const root = document.documentElement;
