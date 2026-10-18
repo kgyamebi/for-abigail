@@ -665,14 +665,13 @@ html.is-today .still-stage {
   width: min(17.5rem, 100%);
 }
 html.is-today .companions {
-  position: absolute;
-  left: -28%;
-  right: -22%;
-  bottom: -0.2rem;
+  position: static;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  margin: 0;
+  gap: 0.35rem;
+  width: 100%;
+  margin: 0.15rem 0 0;
   pointer-events: none;
 }
 .still {
@@ -680,13 +679,8 @@ html.is-today .companions {
   height: auto;
   filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.45));
 }
-.still-rose { width: 46%; }
-.still-coupe { width: 40%; margin-bottom: 0.8rem; }
-@media (max-width: 760px) {
-  html.is-today .companions { left: -14%; right: -6%; }
-  .still-rose { width: 40%; }
-  .still-coupe { width: 36%; }
-}
+.still-rose { width: 48%; }
+.still-coupe { width: 42%; margin-bottom: 0.15rem; }
 .feast-kicker {
   margin: 0;
   letter-spacing: 0.28em;
@@ -1121,7 +1115,52 @@ html.is-today .balloon { display: none; }
   html.is-today .edge-right { right: 0.45rem; }
 }
 
+@media (max-width: 959px) {
+  html.is-today .hero::before { content: none; }
+  html.is-today .age-ribbon {
+    max-width: 100%;
+    letter-spacing: 0.1em;
+    line-height: 1.4;
+    text-align: center;
+  }
+  html.is-today .veil {
+    overflow: auto;
+    justify-content: flex-start;
+    gap: 0.4rem;
+    padding-bottom: calc(2.7rem + env(safe-area-inset-bottom, 0px));
+  }
+  html.is-today .veil:not(.is-waiting) .veil-name {
+    font-size: clamp(2.5rem, 12vw, 3.5rem);
+  }
+  html.is-today .veil:not(.is-waiting) .veil-age {
+    font-size: clamp(3.6rem, 18vw, 5.2rem);
+  }
+  .cake-veil { width: min(11.25rem, 54vw); }
+  html.is-today .home-frame,
+  html.is-today .game-frame,
+  html.is-today .finale {
+    padding-bottom: calc(4.6rem + env(safe-area-inset-bottom, 0px));
+  }
+  html.is-today .petal { display: none; }
+  .bar-title {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
 @media (min-width: 960px) {
+  html.is-today .companions {
+    position: absolute;
+    left: -28%;
+    right: -22%;
+    bottom: -0.2rem;
+    width: auto;
+    margin: 0;
+  }
+  .still-rose { width: 46%; }
+  .still-coupe { width: 40%; margin-bottom: 0.8rem; }
   .home-frame {
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
