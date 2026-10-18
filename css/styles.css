@@ -658,7 +658,34 @@ html.is-today .age-ribbon {
 html.is-today .feast {
   display: block;
   margin: 1.15rem 0 0;
-  max-width: 24rem;
+  max-width: 26rem;
+}
+html.is-today .still-stage {
+  position: relative;
+  width: min(17.5rem, 100%);
+}
+html.is-today .companions {
+  position: absolute;
+  left: -28%;
+  right: -22%;
+  bottom: -0.2rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin: 0;
+  pointer-events: none;
+}
+.still {
+  display: block;
+  height: auto;
+  filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.45));
+}
+.still-rose { width: 46%; }
+.still-coupe { width: 40%; margin-bottom: 0.8rem; }
+@media (max-width: 760px) {
+  html.is-today .companions { left: -14%; right: -6%; }
+  .still-rose { width: 40%; }
+  .still-coupe { width: 36%; }
 }
 .feast-kicker {
   margin: 0;
@@ -683,6 +710,7 @@ html.is-today .feast {
   justify-items: center;
 }
 html.is-today .cake-hero { width: min(17.5rem, 100%); }
+html.is-today .still-stage .cake-hero { width: 100%; }
 .cake-photo {
   display: block;
   width: 100%;
@@ -1074,11 +1102,9 @@ html.is-today .float-cake {
   width: 3.15rem;
   height: 2.75rem;
 }
-@media (max-width: 1099px) {
-  html.is-today .float-cake,
-  html.is-today .float-candle,
-  html.is-today .balloon { display: none; }
-}
+html.is-today .float-cake,
+html.is-today .float-candle,
+html.is-today .balloon { display: none; }
 
 @media (min-width: 760px) {
   html.is-today .edge-candles {
